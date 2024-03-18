@@ -1,5 +1,5 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/types_of_expense/add_expense_type/add_expense_type_screen.dart';
+import 'package:cars_expense_management/screens/expense_types/add_expense_type/add_expense_type_screen.dart';
 
 // GoRouter configuration
 final router = GoRouter(

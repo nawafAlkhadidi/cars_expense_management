@@ -5,30 +5,14 @@ import 'package:syncfusion_flutter_core/theme.dart';
 
 // class CarsScreen extends ConsumerStatefulWidget
 
-class CarsScreen extends ConsumerStatefulWidget {
+class CarsScreen extends ConsumerWidget {
   const CarsScreen({super.key});
 
   @override
-  CarsScreenState createState() => CarsScreenState();
-}
-
-class CarsScreenState extends ConsumerState<CarsScreen> {
-  // @override
-  // void initState() {
-  //   // ref.read(carViewModelProvider).getCars();
-
-  //   super.initState();
-  // }
-
-  // final GlobalKey<SfDataGridState> _key = GlobalKey<SfDataGridState>();
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(carViewModelProvider);
-    return Scaffold(
-      backgroundColor: AppBrand.backgroundColor,
-      appBar: AppBar(title: const Text("السيارات")),
-      body: Padding(
+    return SafeArea(
+      child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
@@ -37,12 +21,13 @@ class CarsScreenState extends ConsumerState<CarsScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(child: Text("السيارات", style: Theme.of(context).appBarTheme.titleTextStyle)),
                   const Expanded(flex: 5, child: SizedBox()),
                   Flexible(
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: () => context.push('/AddCarScreen').whenComplete(() => viewModel.getCars()),
+                      onPressed: () => viewModel.setIndexPage(1),
                       text: "سيارة جديدة",
                       textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,
@@ -50,13 +35,13 @@ class CarsScreenState extends ConsumerState<CarsScreen> {
                     ),
                   ).animate().scale(),
                   const SizedBox(width: 30),
-                  Flexible(
+                  const Flexible(
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: () => context.push('/AddCarScreen').whenComplete(() => viewModel.getCars()),
+                      onPressed: null,
                       text: "تصدير",
-                      textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                      textStyle: TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,
                       color: AppBrand.mainColor,
                     ),

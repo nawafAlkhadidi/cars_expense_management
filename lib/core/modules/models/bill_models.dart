@@ -1,7 +1,7 @@
 class BillModels {
-  String? id; //
-  String? carId; //
-  String? expenseId;
+  int? id; //
+  int? carId; //
+  int? expenseId;
   String? price; //
   String? details;
   String? currentOdometer; //

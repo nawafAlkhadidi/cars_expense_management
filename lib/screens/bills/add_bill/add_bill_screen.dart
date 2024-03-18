@@ -39,250 +39,218 @@ class AddBillScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 50),
-            Form(
-              key: viewModel.globalKey,
-              child: Container(
-                width: size.width * 0.9,
-                padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 40),
-                decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: const BorderRadius.all(Radius.circular(10))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("التاريخ"))),
-                        SizedBox(width: size.width * 0.012),
-                        SizedBox(
-                          width: size.width * 0.22,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            readOnly: true,
-                            onTap: () => viewModel.dateRangePickerDialog(context: context),
-                            controller: viewModel.dataController,
-                            suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ الفاتورة";
-                              }
+            Expanded(
+              child: Form(
+                key: viewModel.globalKey,
+                child: Container(
+                  width: size.width * 0.9,
+                  padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
+                  decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 70),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("التاريخ"))),
+                          SizedBox(width: size.width * 0.012),
+                          SizedBox(
+                            width: size.width * 0.22,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              readOnly: true,
+                              onTap: () => viewModel.dateRangePickerDialog(context: context),
+                              controller: viewModel.dataController,
+                              suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "الرجاء إدخال تاريخ الفاتورة";
+                                }
 
-                              return null;
-                            },
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                        const Expanded(child: SizedBox()),
-                        const SizedBox(height: 50, child: Center(child: Text("السيارة"))),
-                        SizedBox(width: size.width * 0.012),
-                        SizedBox(
-                          width: size.width * 0.39,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                          const Expanded(child: SizedBox()),
+                          const SizedBox(height: 50, child: Center(child: Text("السيارة"))),
+                          SizedBox(width: size.width * 0.012),
+                          SizedBox(
+                            width: size.width * 0.38,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "الرجاء اختيار السيارة";
+                                }
+
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("عداد المسافة", textAlign: TextAlign.center))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 3,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white54,
-                            readOnly: true,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.05),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("عداد المسافة", textAlign: TextAlign.center))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 3,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white54,
+                              readOnly: true,
+                              labelText: "",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                            ),
                           ),
-                        ),
-                        const Expanded(child: SizedBox()),
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة الحالية", textAlign: TextAlign.center))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 3,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                          const Expanded(child: SizedBox()),
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة الحالية", textAlign: TextAlign.center))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 3,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "الرجاء إدخال مسافة العداد الحالية";
+                                }
+
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                        const Expanded(child: SizedBox()),
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة", textAlign: TextAlign.center))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 3,
-                          child: myTextFiled(
-                            height: 75,
-                            readOnly: true,
-                            fillColor: Colors.white54,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                          const Expanded(child: SizedBox()),
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة", textAlign: TextAlign.center))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 3,
+                            child: myTextFiled(
+                              height: 75,
+                              readOnly: true,
+                              fillColor: Colors.white54,
+                              labelText: "",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("المبلغ", textAlign: TextAlign.center))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 2,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.05),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المبلغ", textAlign: TextAlign.center))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 2,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              isvalidator: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "الرجاء إدخال قيمة الفاتورة";
+                                }
+
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                        const Expanded(child: SizedBox()),
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("الأسم ", textAlign: TextAlign.center))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 6,
-                          child: myTextFiled(
-                            height: 75,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.singleLineFormatter,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                          const Expanded(child: SizedBox()),
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("الأسم", textAlign: TextAlign.center))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 6,
+                            child: myTextFiled(
+                              height: 75,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.singleLineFormatter,
+                              ],
+                              isvalidator: false,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "الرجاء إدخال الأسم  ";
+                                }
+
+                                return null;
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * 0.05),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 50, width: 65, child: Center(child: Text("التفاصيل", textAlign: TextAlign.start))),
-                        SizedBox(width: size.width * 0.012),
-                        Expanded(
-                          flex: 6,
-                          child: myTextFiled(
-                            height: 120,
-                            maxLines: 6,
-                            fillColor: Colors.white,
-                            labelText: "",
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ لوحة السيارة";
-                              }
-                              if (value.length > 5) {
-                                return "عدد ارقام اللوحة 4 خانات";
-                              }
-                              return null;
-                            },
+                        ],
+                      ),
+                      SizedBox(height: size.height * 0.05),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 50, width: 65, child: Center(child: Text("التفاصيل", textAlign: TextAlign.start))),
+                          SizedBox(width: size.width * 0.012),
+                          Expanded(
+                            flex: 6,
+                            child: myTextFiled(
+                              height: 150,
+                              maxLines: 6,
+                              fillColor: Colors.white,
+                              labelText: "",
+                              keyboardType: TextInputType.multiline,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.singleLineFormatter,
+                              ],
+                              isvalidator: false,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -11,7 +11,6 @@ class CarDataSource extends DataGridSource {
 
   @override
   Future<void> handleRefresh() async {
-    print("handleRefresh");
     await Future<void>.delayed(const Duration(seconds: 5));
     // orders = getOrders(orders, 15);
     buildDataGridRows();

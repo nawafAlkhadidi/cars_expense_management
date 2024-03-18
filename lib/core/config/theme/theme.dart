@@ -4,6 +4,7 @@ class AppBrand {
   static const mainColor = Color(0xFF0c2738);
   static const secondColor = Color(0xffff5f2e);
   static const drawerButtonColor = Color(0xff82c7c9);
+  static const drawerbackgroundColor = Color(0xffe7e7f0);
   static const tableHeaderColor = Color(0xff82c7c9);
 
   static const backgroundColor = Color(0xfffafafb);

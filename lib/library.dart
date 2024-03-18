@@ -16,7 +16,7 @@ export 'package:cars_expense_management/screens/cars/cars_screen.dart';
 export 'package:cars_expense_management/screens/home/home_screen.dart';
 export 'package:cars_expense_management/screens/settings/settings_screen.dart';
 export 'package:cars_expense_management/screens/side_menu.dart';
-export 'package:cars_expense_management/screens/types_of_expense/type_of_ex_screen.dart';
+export 'package:cars_expense_management/screens/expense_types/expese_types_screen.dart';
 export 'package:cars_expense_management/screens/bills/add_bill/add_bill_screen.dart';
 export 'package:cars_expense_management/screens/bills/bills_screen.dart';
 
@@ -39,14 +39,12 @@ export 'package:cars_expense_management/core/generated/locator/locater.dart';
 
 //!modules
 export 'package:cars_expense_management/core/modules/models/car_models.dart';
-
 export 'package:cars_expense_management/core/modules/models/type_of_expense_models.dart';
 export 'package:cars_expense_management/core/modules/repositories/expense_types_repositories.dart';
 
 //!views model
-export 'package:cars_expense_management/screens/cars/add_car/add_car_view_model.dart';
 export 'package:cars_expense_management/screens/cars/cars_view_model.dart';
-export 'package:cars_expense_management/screens/types_of_expense/type_of_ex_view_model.dart';
+export 'package:cars_expense_management/screens/expense_types/expense_types_view_model.dart';
 //!widget
 export 'package:cars_expense_management/widgets/text_field.dart';
 

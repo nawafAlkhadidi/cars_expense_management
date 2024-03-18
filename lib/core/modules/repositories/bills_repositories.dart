@@ -10,10 +10,28 @@ class BillsRepositories {
     List<BillModels> bills = [];
     Database db = await databaseService.database;
     List<Map<String, dynamic>> billsData = await db.query('bills');
+    getBillsWithCarAndExpense();
     for (var bill in billsData) {
+      // print(bill.toString());
       bills.add(BillModels.fromJson(bill));
     }
     return bills;
+  }
+
+  Future<List<Map<String, dynamic>>> getBillsWithCarAndExpense() async {
+    print("object");
+    Database db = await databaseService.database;
+    List<Map<String, dynamic>> billsData = await db.rawQuery('''
+    SELECT bills.*, cars.*, types_of_expense.*
+    FROM bills
+    JOIN cars ON cars.id = bills.car_id
+    JOIN types_of_expense ON types_of_expense.id = bills.expense_id
+  ''');
+    print(billsData);
+    for (var bill in billsData) {
+      print(bill.toString());
+    }
+    return billsData;
   }
 
   Future<bool> addNewBills(BillModels newBill) async {

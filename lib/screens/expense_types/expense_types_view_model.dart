@@ -1,11 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/types_of_expense/data%20source/expense_types_data_source.dart';
+import 'package:cars_expense_management/screens/expense_types/add_expense_type/add_expense_type_screen.dart';
+import 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 import 'package:collection/collection.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-final typeOfExViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<ExpenseTypesViewModel>());
+final expenseTypesViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<ExpenseTypesViewModel>());
 
 class ExpenseTypesViewModel extends ChangeNotifier {
   final ExpenseTypesRepositories expenseTypesRepositories;
@@ -16,11 +17,38 @@ class ExpenseTypesViewModel extends ChangeNotifier {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+
   TypeOfExpenseModels newExpense = TypeOfExpenseModels();
-
   List<TypeOfExpenseModels> expenseList = [];
-
   TextEditingController? expenIdController, expenNameController;
+
+  int indexPage = 0;
+
+  void setIndexPage(int newIndex) {
+    indexPage = newIndex;
+    notifyListeners();
+  }
+
+  Widget getScreen(int index) {
+    switch (index) {
+      case 1:
+        return const AddExpenseTypeScreen();
+      default:
+        return const ExpenseTypesScreen();
+    }
+  }
+
+  void addNewType({required BuildContext context}) async {
+    if (globalKey.currentState!.validate()) {
+      newExpense.name = expenNameController!.value.text;
+      bool status = await expenseTypesRepositories.addNewType(newExpense);
+      if (status) {
+        setIndexPage(0);
+        getExpense();
+      }
+    }
+  }
 
   void initController() {
     expenIdController = TextEditingController();

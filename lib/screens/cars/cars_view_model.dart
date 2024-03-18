@@ -2,7 +2,7 @@
 
 import 'package:cars_expense_management/core/modules/repositories/car_repositories.dart';
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/cars/data%20source/cars_data_source.dart';
+import 'package:cars_expense_management/screens/cars/data_source/cars_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:collection/collection.dart';
 
@@ -18,7 +18,9 @@ class CarViewModel extends ChangeNotifier {
 
   List<CarModel> cars = [];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   CarModel newCar = CarModel();
+  int indexPage = 0;
 
   TextEditingController? carIdController,
       plateNumbersController,
@@ -28,6 +30,11 @@ class CarViewModel extends ChangeNotifier {
       currentOdometerController,
       carModelController;
 
+  void setIndexPage(int newIndex) {
+    indexPage = newIndex;
+    notifyListeners();
+  }
+
   void initController() {
     carIdController = TextEditingController();
     plateNumbersController = TextEditingController();
@@ -36,6 +43,15 @@ class CarViewModel extends ChangeNotifier {
     currentOdometerController = TextEditingController();
     plateLettersController = TextEditingController();
     carModelController = TextEditingController();
+  }
+
+  Widget getScreen(int index) {
+    switch (index) {
+      case 1:
+        return const AddCarScreen();
+      default:
+        return const CarsScreen();
+    }
   }
 
   void setDataTable() {
@@ -94,6 +110,21 @@ class CarViewModel extends ChangeNotifier {
         ),
       ),
     );
+  }
+
+  void addcar({required BuildContext context}) async {
+    if (_formKey.currentState!.validate()) {
+      newCar.plateNumbers = int.tryParse(plateNumbersController!.value.text);
+      newCar.plateLetters = plateLettersController!.value.text;
+      newCar.vin = vinController!.value.text;
+      newCar.carModel = int.tryParse(carModelController!.value.text);
+      newCar.typeOfCar = typeOfCarController!.value.text;
+      newCar.currentOdometer = int.tryParse(currentOdometerController!.value.text);
+      bool status = await carRepositories.addcar(newCar);
+      if (status) {
+        setIndexPage(1);
+      }
+    }
   }
 
   Widget buildEndSwipeWidget(BuildContext context, DataGridRow row, int rowIndex) {

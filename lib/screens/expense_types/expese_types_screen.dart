@@ -7,27 +7,28 @@ class ExpenseTypesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(typeOfExViewModelProvider);
+    final viewModel = ref.watch(expenseTypesViewModelProvider);
     // Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       backgroundColor: AppBrand.backgroundColor,
-      appBar: AppBar(title: const Text("نوع المصاريف")),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+              padding: const EdgeInsets.symmetric(vertical: 30),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(child: Text("المصاريف", style: Theme.of(context).appBarTheme.titleTextStyle)),
                   const Expanded(flex: 4, child: SizedBox()),
                   Flexible(
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: () => context.push('/AddTypeExScreen').whenComplete(() => viewModel.getExpense()),
+                      onPressed: () => viewModel.setIndexPage(1),
+                      // onPressed: () => context.push('/AddTypeExScreen').whenComplete(() => viewModel.getExpense()),
                       text: "صنف جديد",
                       textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,

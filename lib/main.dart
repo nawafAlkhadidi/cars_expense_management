@@ -10,7 +10,7 @@ void main() {
     // setWindowVisibility(visible: false);
     // setWindowMaxSize(const Size(2200, 1900));
     // setWindowMinSize(const Size(700, 600));
-    setWindowMinSize(const Size(1200, 900));
+    setWindowMinSize(const Size(900, 600));
   }
   setupLocator();
   runApp(const ProviderScope(child: MyApp()));

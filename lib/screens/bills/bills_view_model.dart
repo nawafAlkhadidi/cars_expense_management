@@ -24,10 +24,11 @@ class BillsViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController detailsController = TextEditingController();
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  int index = 0;
+  int indexPage = 0;
   BillModels bills = BillModels();
+
   void setIndex(int newIndex) {
-    index = newIndex;
+    indexPage = newIndex;
     notifyListeners();
   }
 
@@ -88,26 +89,27 @@ class BillsViewModel extends ChangeNotifier {
       case 1:
         return const AddBillScreen();
       default:
-        return const BillScreen();
+        return const BillsScreen();
     }
   }
 
   void addbill({required BuildContext context}) async {
-    if (globalKey.currentState!.validate()) {
-      bills.price = priceController.value.text;
-      bills.details = detailsController.value.text;
-      bills.personName = nameController.value.text;
-      bills.createdAt = dataController.value.text;
-      bills.distance = distanceController.value.text;
-      bills.currentOdometer = carCurrentOdometerController.value.text;
-      bills.previousOdometer = carOdometerController.value.text;
-      bills.carId = carNameController.value.text;
-
-      // bool status = await carRepositories.addNewBills(bills);
-      // if (status) {
-      //   Navigator.pop(context);
-      // setIndex(0)
-      // }
-    }
+    billsRepositories.getAllBills();
+    //  if (globalKey.currentState!.validate()) {
+    //   bills.price = priceController.value.text;
+    //   bills.details = detailsController.value.text;
+    //   bills.personName = nameController.value.text;
+    //   bills.createdAt = dataController.value.text;
+    //   bills.distance = distanceController.value.text;
+    //   bills.currentOdometer = carCurrentOdometerController.value.text;
+    //   bills.previousOdometer = carOdometerController.value.text;
+    //   // bills.carId = carNameController.value.text;
+    //   bills.carId = 4;
+    //   bills.expenseId = 2;
+    //   bool status = await billsRepositories.addNewBills(bills);
+    //   if (status) {
+    //     setIndex(0);
+    //   }
+    //   //  }
   }
 }
