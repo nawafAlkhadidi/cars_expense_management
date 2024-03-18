@@ -89,6 +89,7 @@ class AddBillScreen extends ConsumerWidget {
                             width: size.width * 0.38,
                             child: myTextFiled(
                               height: 75,
+                              onTap: () => viewModel.carPickerDialog(context: context),
                               fillColor: Colors.white,
                               labelText: "",
                               suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages
 
 import 'package:cars_expense_management/core/modules/models/bill_models.dart';
+import 'package:cars_expense_management/core/modules/models/car_models.dart';
 import 'package:cars_expense_management/core/modules/repositories/bills_repositories.dart';
 import 'package:cars_expense_management/core/modules/repositories/car_repositories.dart';
 import 'package:cars_expense_management/library.dart';
@@ -15,21 +16,35 @@ class BillsViewModel extends ChangeNotifier {
   // constructor
   BillsViewModel(this.billsRepositories, this.carsRepositories);
 
-  TextEditingController dataController = TextEditingController();
-  TextEditingController carNameController = TextEditingController();
-  TextEditingController carOdometerController = TextEditingController();
-  TextEditingController carCurrentOdometerController = TextEditingController();
-  TextEditingController distanceController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController detailsController = TextEditingController();
+  TextEditingController? dataController,
+      carNameController,
+      carOdometerController,
+      carCurrentOdometerController,
+      distanceController,
+      priceController,
+      nameController,
+      detailsController;
+
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   int indexPage = 0;
   BillModels bills = BillModels();
+  CarModel car = CarModel();
+  List<CarModel> cars = [];
 
   void setIndex(int newIndex) {
     indexPage = newIndex;
     notifyListeners();
+  }
+
+  void initController() {
+    dataController = TextEditingController();
+    carNameController = TextEditingController();
+    carOdometerController = TextEditingController();
+    carCurrentOdometerController = TextEditingController();
+    distanceController = TextEditingController();
+    priceController = TextEditingController();
+    nameController = TextEditingController();
+    detailsController = TextEditingController();
   }
 
   dateRangePickerDialog({required BuildContext context}) {
@@ -75,13 +90,38 @@ class BillsViewModel extends ChangeNotifier {
     );
   }
 
+  carPickerDialog({required BuildContext context}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            // actionsAlignment: MainAxisAlignment.spaceEvenly,
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
+            child: Container(
+                padding: const EdgeInsets.all(20),
+                height: 450,
+                width: 450,
+                child: ListView.builder(
+                  itemCount: cars.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(cars[index].plateLetters!),
+                    );
+                  },
+                ))).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+      },
+    );
+  }
+
   _onSelectionChanged(DateRangePickerSelectionChangedArgs data, BuildContext context) {
-    dataController.text = DateFormat('yyyy/MM/dd').format((data.value));
+    dataController?.text = DateFormat('yyyy/MM/dd').format((data.value));
     Navigator.pop(context);
   }
 
   claer() {
-    dataController.clear();
+    dataController?.clear();
   }
 
   Widget getScreen(int index) {
@@ -94,22 +134,22 @@ class BillsViewModel extends ChangeNotifier {
   }
 
   void addbill({required BuildContext context}) async {
-    billsRepositories.getAllBills();
-    //  if (globalKey.currentState!.validate()) {
-    //   bills.price = priceController.value.text;
-    //   bills.details = detailsController.value.text;
-    //   bills.personName = nameController.value.text;
-    //   bills.createdAt = dataController.value.text;
-    //   bills.distance = distanceController.value.text;
-    //   bills.currentOdometer = carCurrentOdometerController.value.text;
-    //   bills.previousOdometer = carOdometerController.value.text;
-    //   // bills.carId = carNameController.value.text;
-    //   bills.carId = 4;
-    //   bills.expenseId = 2;
-    //   bool status = await billsRepositories.addNewBills(bills);
-    //   if (status) {
-    //     setIndex(0);
-    //   }
-    //   //  }
+    // billsRepositories.getAllBills();
+    //    if (globalKey.currentState!.validate()) {
+    //     bills.price = double.tryParse(priceController.value.text);
+    //     bills.details = detailsController.value.text;
+    //     bills.personName = nameController.value.text;
+    //     bills.createdAt = dataController.value.text;
+    //     bills.distance = distanceController.value.text;
+    //     bills.currentOdometer = carCurrentOdometerController.value.text;
+    //     bills.previousOdometer = carOdometerController.value.text;
+    //     // bills.carId = carNameController.value.text;
+    //     bills.carId = 4;
+    //     bills.expenseId = 2;
+    //     bool status = await billsRepositories.addNewBills(bills);
+    //     if (status) {
+    //       setIndex(0);
+    //     }
+    //   //   //  }
   }
 }
