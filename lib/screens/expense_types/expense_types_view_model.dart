@@ -2,7 +2,6 @@
 
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/expense_types/add_expense_type/add_expense_type_screen.dart';
-import 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 import 'package:collection/collection.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 

@@ -1,15 +1,22 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/bills/bills_view_model.dart';
 
-class AddBillScreen extends ConsumerWidget {
+class AddBillScreen extends ConsumerStatefulWidget {
   const AddBillScreen({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddBillScreenState();
+}
+
+class _AddBillScreenState extends ConsumerState<AddBillScreen> {
+  @override
+  void initState() {
+    ref.read(billsViewModelProvider).initController();
+    super.initState();
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final viewModel = ref.watch(billsViewModelProvider);
-
     Size size = MediaQuery.sizeOf(context);
-
     return SafeArea(
         minimum: const EdgeInsets.only(top: 60, right: 30, left: 30, bottom: 30),
         child: Column(
@@ -56,7 +63,7 @@ class AddBillScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("التاريخ"))),
+                          SizedBox(height: 50, width: 65, child: Center(child: Text("التاريخ", style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           SizedBox(
                             width: size.width * 0.22,
@@ -83,13 +90,14 @@ class AddBillScreen extends ConsumerWidget {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          const SizedBox(height: 50, child: Center(child: Text("السيارة"))),
+                          SizedBox(height: 50, child: Center(child: Text("السيارة", style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           SizedBox(
                             width: size.width * 0.38,
                             child: myTextFiled(
                               height: 75,
-                              onTap: () => viewModel.carPickerDialog(context: context),
+                              onTap: () => viewModel.carsPickerDialog(context: context),
+                              controller: viewModel.carNameController,
                               fillColor: Colors.white,
                               labelText: "",
                               suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
@@ -115,7 +123,10 @@ class AddBillScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("عداد المسافة", textAlign: TextAlign.center))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("عداد المسافة", textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 3,
@@ -125,6 +136,7 @@ class AddBillScreen extends ConsumerWidget {
                               readOnly: true,
                               labelText: "",
                               keyboardType: TextInputType.number,
+                              controller: viewModel.carOdometerController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
@@ -132,7 +144,10 @@ class AddBillScreen extends ConsumerWidget {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة الحالية", textAlign: TextAlign.center))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("المسافة الحالية", textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 3,
@@ -141,6 +156,7 @@ class AddBillScreen extends ConsumerWidget {
                               fillColor: Colors.white,
                               labelText: "",
                               keyboardType: TextInputType.number,
+                              controller: viewModel.carCurrentOdometerController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
@@ -155,7 +171,10 @@ class AddBillScreen extends ConsumerWidget {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المسافة", textAlign: TextAlign.center))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("المسافة", textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 3,
@@ -165,6 +184,7 @@ class AddBillScreen extends ConsumerWidget {
                               fillColor: Colors.white54,
                               labelText: "",
                               keyboardType: TextInputType.number,
+                              controller: viewModel.distanceController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
@@ -179,7 +199,10 @@ class AddBillScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("المبلغ", textAlign: TextAlign.center))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("المبلغ", textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 2,
@@ -188,6 +211,7 @@ class AddBillScreen extends ConsumerWidget {
                               fillColor: Colors.white,
                               labelText: "",
                               keyboardType: TextInputType.number,
+                              controller: viewModel.priceController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
@@ -202,7 +226,10 @@ class AddBillScreen extends ConsumerWidget {
                             ),
                           ),
                           const Expanded(child: SizedBox()),
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("الأسم", textAlign: TextAlign.center))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("الأسم", textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 6,
@@ -210,7 +237,8 @@ class AddBillScreen extends ConsumerWidget {
                               height: 75,
                               fillColor: Colors.white,
                               labelText: "",
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
+                              controller: viewModel.nameController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.singleLineFormatter,
                               ],
@@ -232,7 +260,10 @@ class AddBillScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 50, width: 65, child: Center(child: Text("التفاصيل", textAlign: TextAlign.start))),
+                          SizedBox(
+                              height: 50,
+                              width: 65,
+                              child: Center(child: Text("التفاصيل", textAlign: TextAlign.start, style: Theme.of(context).textTheme.labelMedium))),
                           SizedBox(width: size.width * 0.012),
                           Expanded(
                             flex: 6,
@@ -242,6 +273,7 @@ class AddBillScreen extends ConsumerWidget {
                               fillColor: Colors.white,
                               labelText: "",
                               keyboardType: TextInputType.multiline,
+                              controller: viewModel.detailsController,
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.singleLineFormatter,
                               ],

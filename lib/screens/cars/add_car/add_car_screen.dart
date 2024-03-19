@@ -52,7 +52,7 @@ class AddCarScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text("رقم اللوحة : "))),
+                SizedBox(height: 50, child: Center(child: Text("رقم اللوحة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                   width: size.width * 0.5,
@@ -82,7 +82,7 @@ class AddCarScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text("حروف اللوحة : "))),
+                SizedBox(height: 50, child: Center(child: Text("حروف اللوحة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                   width: size.width * 0.5,
@@ -111,7 +111,7 @@ class AddCarScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text(" رقم الهيكل : "))),
+                SizedBox(height: 50, child: Center(child: Text(" رقم الهيكل : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                   width: size.width * 0.5,
@@ -134,7 +134,7 @@ class AddCarScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text("موديل السيارة : "))),
+                SizedBox(height: 50, child: Center(child: Text("موديل السيارة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                     width: size.width * 0.5,
@@ -158,7 +158,7 @@ class AddCarScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text(" عداد المسافة : "))),
+                SizedBox(height: 50, child: Center(child: Text(" عداد المسافة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                     width: size.width * 0.5,
@@ -180,7 +180,7 @@ class AddCarScreen extends ConsumerWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50, child: Center(child: Text("نوع السيارة : "))),
+                SizedBox(height: 50, child: Center(child: Text("نوع السيارة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
                 SizedBox(
                     width: size.width * 0.5,

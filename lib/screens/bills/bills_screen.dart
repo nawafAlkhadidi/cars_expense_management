@@ -1,5 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/bills/bills_view_model.dart';
 
 class BillsScreen extends ConsumerWidget {
   const BillsScreen({super.key});

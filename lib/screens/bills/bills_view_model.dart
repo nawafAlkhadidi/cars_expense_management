@@ -1,20 +1,16 @@
-// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages
-
-import 'package:cars_expense_management/core/modules/models/bill_models.dart';
-import 'package:cars_expense_management/core/modules/models/car_models.dart';
-import 'package:cars_expense_management/core/modules/repositories/bills_repositories.dart';
-import 'package:cars_expense_management/core/modules/repositories/car_repositories.dart';
+// ignore_for_file: use_build_context_synchronously,
 import 'package:cars_expense_management/library.dart';
-import 'package:intl/intl.dart';
+import 'package:cars_expense_management/widgets/date_range_picker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 final billsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<BillsViewModel>());
 
 class BillsViewModel extends ChangeNotifier {
   final BillsRepositories billsRepositories;
-  final CarRepositories carsRepositories;
+  final CarRepositories carDataSource;
   // constructor
-  BillsViewModel(this.billsRepositories, this.carsRepositories);
+  BillsViewModel(this.billsRepositories, this.carDataSource);
 
   TextEditingController? dataController,
       carNameController,
@@ -47,12 +43,15 @@ class BillsViewModel extends ChangeNotifier {
     detailsController = TextEditingController();
   }
 
+  Future<List<CarModel>> getCars() async {
+    return carDataSource.getCars();
+  }
+
   dateRangePickerDialog({required BuildContext context}) {
     return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            // actionsAlignment: MainAxisAlignment.spaceEvenly,
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
             insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
@@ -60,59 +59,55 @@ class BillsViewModel extends ChangeNotifier {
               padding: const EdgeInsets.all(20),
               height: 450,
               width: 450,
-              child: SfDateRangePicker(
-                onSelectionChanged: (dateRangePickerSelectionChangedArgs) => _onSelectionChanged(dateRangePickerSelectionChangedArgs, context),
-                selectionMode: DateRangePickerSelectionMode.single,
-                headerStyle: const DateRangePickerHeaderStyle(textStyle: TextStyle(fontSize: 22, color: Colors.black)),
-                yearCellStyle: DateRangePickerYearCellStyle(
-                    textStyle: Theme.of(context).textTheme.bodyLarge, todayTextStyle: const TextStyle(fontSize: 16, color: Colors.deepPurple)),
-                rangeTextStyle: const TextStyle(color: Colors.red),
-                monthCellStyle: const DateRangePickerMonthCellStyle(
-                  // selectionTextStyle: TextStyle(fontStyle: FontStyle.normal, fontWeight: FontWeight.w500, fontSize: 12, color: Colors.white),
-                  // blackoutDateTextStyle: const TextStyle(color: Colors.red, fontSize: 20),
-                  // rangeTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  // leadingDatesTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  // specialDatesTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  // disabledDatesTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  // trailingDatesTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  // selectionTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-                  textStyle: TextStyle(color: Colors.black, fontSize: 18),
-                  todayTextStyle: TextStyle(color: Colors.deepPurple, fontSize: 18),
-                  weekendTextStyle: TextStyle(color: Colors.black, fontSize: 18),
-                  // blackoutDateTextStyle:
-                ),
-                selectionTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
-
-                // initialSelectedRange: PickerDateRange(DateTime.now().subtract(const Duration(days: 4)), DateTime.now().add(const Duration(days: 3))),
-              ),
+              child: CustomDateRangePicker(onSelectionChanged: _onSelectionChanged),
             )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
       },
     );
   }
 
-  carPickerDialog({required BuildContext context}) {
+  carsPickerDialog({required BuildContext context}) {
     return showDialog(
       context: context,
       builder: (context) {
         return Dialog(
-            // actionsAlignment: MainAxisAlignment.spaceEvenly,
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
             insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
             child: Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                 height: 450,
                 width: 450,
-                child: ListView.builder(
-                  itemCount: cars.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      title: Text(cars[index].plateLetters!),
-                    );
-                  },
-                ))).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+                child: FutureBuilder<List<CarModel>>(
+                    future: carDataSource.getCars(),
+                    builder: (context, dataSnapshot) {
+                      if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                        return const CircularProgressIndicator();
+                      }
+                      return ListView.builder(
+                          padding: const EdgeInsets.only(top: 10),
+                          itemCount: dataSnapshot.data?.length ?? 0,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: false,
+                          itemBuilder: (_, index) => ListTile(
+                                onTap: () {
+                                  selectCar(selectedCar: dataSnapshot.data![index]);
+                                  Navigator.pop(context);
+                                },
+                                leading: CircleAvatar(backgroundColor: AppBrand.drawerButtonColor, child: Text(dataSnapshot.data![index].id.toString())),
+                                title: Text(
+                                    "${dataSnapshot.data![index].typeOfCar!} | ${dataSnapshot.data![index].plateNumbers!} | ${dataSnapshot.data![index].plateLetters.toString()}"),
+                                subtitle: Text(dataSnapshot.data![index].vin.toString()),
+                                trailing: const Icon(Icons.arrow_forward_ios),
+                              ));
+                    }))).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
       },
     );
+  }
+
+  selectCar({CarModel? selectedCar}) {
+    car = selectedCar!;
+    carNameController?.text = "${car.typeOfCar!} | ${car.plateNumbers!} | ${car.plateLetters.toString()}";
+    carOdometerController?.text = car.currentOdometer.toString();
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs data, BuildContext context) {

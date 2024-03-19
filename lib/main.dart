@@ -39,10 +39,12 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           bodySmall: TextStyle(color: Colors.white, fontSize: 14, fontFamily: "Tajawal"),
           bodyMedium: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Tajawal"),
-          labelSmall: TextStyle(color: Colors.black, fontSize: 15, fontFamily: "Tajawal"),
-          titleLarge: TextStyle(color: Colors.black, fontFamily: "Tajawal", fontSize: 25),
-          titleSmall: TextStyle(color: Colors.black, fontFamily: "Tajawal"),
-          titleMedium: TextStyle(color: Colors.deepOrange, fontFamily: "Tajawal"),
+          labelSmall: TextStyle(color: Colors.black, fontSize: 14, fontFamily: "Tajawal"),
+          labelMedium: TextStyle(color: Colors.black, fontSize: 16, fontFamily: "Tajawal"),
+          labelLarge: TextStyle(color: Colors.black, fontSize: 18, fontFamily: "Tajawal"),
+          titleLarge: TextStyle(color: Colors.black, fontFamily: "Tajawal", fontSize: 20),
+          titleSmall: TextStyle(color: Colors.black, fontFamily: "Tajawal", fontSize: 16),
+          titleMedium: TextStyle(color: Colors.deepOrange, fontFamily: "Tajawal", fontSize: 18),
         ),
         dialogTheme: const DialogTheme(
             backgroundColor: AppBrand.backgroundColor,
@@ -56,7 +58,6 @@ class MyApp extends StatelessWidget {
             titleTextStyle: TextStyle(color: Colors.black, fontFamily: "Tajawal", fontSize: 30)),
         useMaterial3: true,
       ),
-      //  home: const HomeScreen(),
     );
   }
 }

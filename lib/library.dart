@@ -19,6 +19,9 @@ export 'package:cars_expense_management/screens/side_menu.dart';
 export 'package:cars_expense_management/screens/expense_types/expese_types_screen.dart';
 export 'package:cars_expense_management/screens/bills/add_bill/add_bill_screen.dart';
 export 'package:cars_expense_management/screens/bills/bills_screen.dart';
+export 'package:cars_expense_management/screens/bills/bills_view_model.dart';
+export 'package:cars_expense_management/screens/cars/data_source/cars_data_source.dart';
+export 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 
 //!package
 export 'package:get_it/get_it.dart';
@@ -29,7 +32,6 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:window_size/window_size.dart';
 export 'package:sqflite/sqflite.dart';
-export 'package:data_table_2/data_table_2.dart';
 // export 'package:provider/provider.dart';
 
 //!utils
@@ -41,6 +43,9 @@ export 'package:cars_expense_management/core/generated/locator/locater.dart';
 export 'package:cars_expense_management/core/modules/models/car_models.dart';
 export 'package:cars_expense_management/core/modules/models/type_of_expense_models.dart';
 export 'package:cars_expense_management/core/modules/repositories/expense_types_repositories.dart';
+export 'package:cars_expense_management/core/modules/models/bill_models.dart';
+export 'package:cars_expense_management/core/modules/repositories/bills_repositories.dart';
+export 'package:cars_expense_management/core/modules/repositories/car_repositories.dart';
 
 //!views model
 export 'package:cars_expense_management/screens/cars/cars_view_model.dart';

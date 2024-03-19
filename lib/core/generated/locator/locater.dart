@@ -1,9 +1,4 @@
-import 'package:cars_expense_management/core/modules/repositories/bills_repositories.dart';
-import 'package:cars_expense_management/core/modules/repositories/car_repositories.dart';
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/screens/bills/bills_view_model.dart';
-import 'package:cars_expense_management/screens/cars/data_source/cars_data_source.dart';
-import 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 
 final locator = GetIt.instance;
 

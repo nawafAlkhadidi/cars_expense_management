@@ -89,42 +89,45 @@ class CarsScreen extends ConsumerWidget {
                           columnWidthMode: ColumnWidthMode.auto,
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           autoFitPadding: const EdgeInsets.all(2.0),
-                          label: Container(padding: const EdgeInsets.all(7.0), alignment: Alignment.center, child: const Text('#'))),
+                          label: Container(
+                              padding: const EdgeInsets.all(7.0),
+                              alignment: Alignment.center,
+                              child: Text('#', style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           columnName: 'plateNumbers',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('رقم اللوحة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('رقم اللوحة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           columnName: 'paintLetters',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('حروف اللوحة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('حروف اللوحة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           columnName: 'vin',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
-                              alignment: Alignment.center, child: Text('الهيكل', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              alignment: Alignment.center, child: Text('الهيكل', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           columnName: 'typeOfCar',
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('نوع السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('نوع السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           columnName: 'carModel',
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('موديل السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('موديل السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           columnName: 'currentOdometer',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('عداد المسافة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('عداد المسافة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                     ],
                   ),
                 ),
