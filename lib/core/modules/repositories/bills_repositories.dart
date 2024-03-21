@@ -11,7 +11,7 @@ class BillsRepositories {
     List<Map<String, dynamic>> billsData = await db.query('bills');
     getBillsWithCarAndExpense();
     for (var bill in billsData) {
-      // print(bill.toString());
+      print(bill.toString());
       bills.add(BillModels.fromJson(bill));
     }
     return bills;
@@ -33,7 +33,7 @@ class BillsRepositories {
 
   Future<bool> addNewBills(BillModels newBill) async {
     Database db = await databaseService.database;
-    await db.insert('bills', newBill.toMap()).then((value) => null);
+    await db.insert('bills', newBill.toMap()).then((value) => print(value));
     return true;
   }
 

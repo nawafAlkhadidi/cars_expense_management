@@ -123,7 +123,7 @@ class CarsScreen extends ConsumerWidget {
                               alignment: Alignment.center,
                               child: Text('موديل السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
-                          columnName: 'currentOdometer',
+                          columnName: 'lastOdometer',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
                               alignment: Alignment.center,

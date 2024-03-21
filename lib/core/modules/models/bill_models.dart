@@ -7,7 +7,7 @@ class BillModels {
   double? price;
   String? details;
   String? personName;
-  int? currentOdometer;
+  int? lastOdometer;
   int? newOdometer;
   int? previousOdometer;
   int? distance;
@@ -18,27 +18,26 @@ class BillModels {
   String? vin;
   int? carModel;
   String? typeOfCar;
-  String? name;
 
-  BillModels(
-      {this.id,
-      this.carId,
-      this.expenseId,
-      this.price,
-      this.details,
-      this.personName,
-      this.currentOdometer,
-      this.newOdometer,
-      this.previousOdometer,
-      this.distance,
-      this.createdAt,
-      this.updatedAt,
-      this.plateNumbers,
-      this.plateLetters,
-      this.vin,
-      this.carModel,
-      this.typeOfCar,
-      this.name});
+  BillModels({
+    this.id,
+    this.carId,
+    this.expenseId,
+    this.price,
+    this.details,
+    this.personName,
+    this.lastOdometer,
+    this.newOdometer,
+    this.previousOdometer,
+    this.distance,
+    this.createdAt,
+    this.updatedAt,
+    this.plateNumbers,
+    this.plateLetters,
+    this.vin,
+    this.carModel,
+    this.typeOfCar,
+  });
 
   BillModels.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -47,7 +46,7 @@ class BillModels {
     price = json['price'];
     details = json['details'];
     personName = json['person_name'];
-    currentOdometer = json['current_odometer'];
+    lastOdometer = json['lastOdometer'];
     previousOdometer = json['previous_odometer'];
     distance = json['distance'];
     createdAt = json['created_at'];
@@ -56,9 +55,8 @@ class BillModels {
     plateLetters = json['plateLetters'];
     vin = json['vin'];
     carModel = json['carModel'];
-    newOdometer = json['odometer_bill'];
+    newOdometer = json['new_odometer'];
     typeOfCar = json['typeOfCar'];
-    name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -78,10 +76,9 @@ class BillModels {
     data['plateLetters'] = plateLetters;
     data['vin'] = vin;
     data['carModel'] = carModel;
-    data['currentOdometer'] = currentOdometer;
+    data['lastOdometer'] = lastOdometer;
     data['typeOfCar'] = typeOfCar;
-    data['name'] = name;
-    data['odometer_in_bill'] = newOdometer;
+    data['new_odometer'] = newOdometer;
     return data;
   }
 
@@ -96,15 +93,7 @@ class BillModels {
       'previous_odometer': previousOdometer,
       'distance': distance,
       'created_at': createdAt,
-      'updated_at': updatedAt,
-      'plateNumbers': plateNumbers,
-      'plateLetters': plateLetters,
-      'vin': vin,
-      'carModel': carModel,
-      'currentOdometer': currentOdometer,
-      'typeOfCar': typeOfCar,
-      'name': name,
-      'current_odometer': newOdometer,
+      'new_odometer': newOdometer,
     };
   }
 }

@@ -30,7 +30,7 @@ export 'package:getwidget/getwidget.dart';
 export 'package:go_router/go_router.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
-export 'package:window_size/window_size.dart';
+export 'package:window_manager/window_manager.dart';
 export 'package:sqflite/sqflite.dart';
 // export 'package:provider/provider.dart';
 

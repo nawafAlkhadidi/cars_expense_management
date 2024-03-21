@@ -1,10 +1,20 @@
 import 'package:cars_expense_management/library.dart';
 
-class AddExpenseTypeScreen extends ConsumerWidget {
+class AddExpenseTypeScreen extends ConsumerStatefulWidget {
   const AddExpenseTypeScreen({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddExpenseTypeScreenState();
+}
+
+class _AddExpenseTypeScreenState extends ConsumerState<AddExpenseTypeScreen> {
+  @override
+  void initState() {
+    ref.read(expenseTypesViewModelProvider).initController();
+    super.initState();
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final viewModel = ref.watch(expenseTypesViewModelProvider);
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(

@@ -25,7 +25,7 @@ class CarViewModel extends ChangeNotifier {
       plateLettersController,
       typeOfCarController,
       vinController,
-      currentOdometerController,
+      lastOdometerController,
       carModelController;
 
   void setIndexPage(int newIndex) {
@@ -38,7 +38,7 @@ class CarViewModel extends ChangeNotifier {
     plateNumbersController = TextEditingController();
     typeOfCarController = TextEditingController();
     vinController = TextEditingController();
-    currentOdometerController = TextEditingController();
+    lastOdometerController = TextEditingController();
     plateLettersController = TextEditingController();
     carModelController = TextEditingController();
   }
@@ -111,16 +111,17 @@ class CarViewModel extends ChangeNotifier {
   }
 
   void addcar({required BuildContext context}) async {
-    if (_formKey.currentState!.validate()) {
+    if (globalKey.currentState!.validate()) {
       newCar.plateNumbers = int.tryParse(plateNumbersController!.value.text);
       newCar.plateLetters = plateLettersController!.value.text;
       newCar.vin = vinController!.value.text;
       newCar.carModel = int.tryParse(carModelController!.value.text);
       newCar.typeOfCar = typeOfCarController!.value.text;
-      newCar.currentOdometer = int.tryParse(currentOdometerController!.value.text);
+      newCar.lastOdometer = int.tryParse(lastOdometerController!.value.text);
       bool status = await carRepositories.addcar(newCar);
       if (status) {
-        setIndexPage(1);
+        getCars();
+        setIndexPage(0);
       }
     }
   }
@@ -161,7 +162,7 @@ class CarViewModel extends ChangeNotifier {
     final String? carModel = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'carModel')?.value.toString();
     carModelController!.text = carModel ?? '';
     final String? currentOdometer = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'currentOdometer')?.value.toString();
-    currentOdometerController!.text = currentOdometer ?? '';
+    lastOdometerController!.text = currentOdometer ?? '';
   }
 
   void _processCellUpdate(DataGridRow row, BuildContext buildContext) async {
@@ -172,7 +173,7 @@ class CarViewModel extends ChangeNotifier {
       newCar.vin = vinController!.value.text;
       newCar.carModel = int.tryParse(carModelController!.value.text);
       newCar.typeOfCar = typeOfCarController!.value.text;
-      newCar.currentOdometer = int.tryParse(currentOdometerController!.value.text);
+      newCar.lastOdometer = int.tryParse(lastOdometerController!.value.text);
 
       bool status = await carRepositories.upadteTheCar(newCar.id!, newCar);
       if (status) {
@@ -184,7 +185,7 @@ class CarViewModel extends ChangeNotifier {
           DataGridCell<String>(columnName: 'vin', value: newCar.vin),
           DataGridCell<int>(columnName: 'carModel', value: newCar.carModel),
           DataGridCell<String>(columnName: 'typeOfCar', value: newCar.typeOfCar),
-          DataGridCell<int>(columnName: 'currentOdometer', value: newCar.currentOdometer),
+          DataGridCell<int>(columnName: 'lastOdometer', value: newCar.lastOdometer),
         ]);
         // carDataSource.buildDataGridRows();
         carDataSource.updateDataSource();
@@ -244,7 +245,7 @@ class CarViewModel extends ChangeNotifier {
             controller: vinController!, columnName: 'رقم الهيكل', filteringTextInput: FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')), length: 40),
         _buildRow(controller: typeOfCarController!, columnName: 'نوع السيارة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 10),
         _buildRow(controller: carModelController!, columnName: 'موديل السيارة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
-        _buildRow(controller: currentOdometerController!, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40)
+        _buildRow(controller: lastOdometerController!, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40)
       ],
     );
   }

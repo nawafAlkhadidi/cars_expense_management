@@ -1,10 +1,20 @@
 import 'package:cars_expense_management/library.dart';
 
-class AddCarScreen extends ConsumerWidget {
+class AddCarScreen extends ConsumerStatefulWidget {
   const AddCarScreen({super.key});
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _AddCarScreenState();
+}
+
+class _AddCarScreenState extends ConsumerState<AddCarScreen> {
+  @override
+  void initState() {
+    ref.read(carViewModelProvider).initController();
+    super.initState();
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final viewModel = ref.watch(carViewModelProvider);
     Size size = MediaQuery.sizeOf(context);
     return SafeArea(
@@ -163,7 +173,7 @@ class AddCarScreen extends ConsumerWidget {
                 SizedBox(
                     width: size.width * 0.5,
                     child: myTextFiled(
-                        controller: viewModel.currentOdometerController,
+                        controller: viewModel.lastOdometerController,
                         isvalidator: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -206,3 +216,18 @@ class AddCarScreen extends ConsumerWidget {
     ));
   }
 }
+
+// class AddCarScreen extends ConsumerStatefulWidget {
+//   const AddCarScreen({super.key});
+//  @override
+//   ConsumerState<ConsumerStatefulWidget> createState() {
+//     // TODO: implement createState
+//     throw UnimplementedError();
+//   }
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+
+//   }
+  
+ 
+// }

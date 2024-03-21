@@ -26,7 +26,7 @@ class CarDataSource extends DataGridSource {
         DataGridCell<String>(columnName: 'vin', value: car.vin),
         DataGridCell<String>(columnName: 'typeOfCar', value: car.typeOfCar),
         DataGridCell<int>(columnName: 'carModel', value: car.carModel),
-        DataGridCell<int>(columnName: 'currentOdometer', value: car.currentOdometer),
+        DataGridCell<int>(columnName: 'lastOdometer', value: car.lastOdometer),
       ]);
       // }
     }).toList();

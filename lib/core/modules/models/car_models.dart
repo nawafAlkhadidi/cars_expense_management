@@ -4,7 +4,7 @@ class CarModel {
   String? plateLetters;
   String? vin;
   int? carModel;
-  int? currentOdometer;
+  int? lastOdometer;
   String? typeOfCar;
 
   CarModel({
@@ -14,7 +14,7 @@ class CarModel {
     this.vin,
     this.carModel,
     this.typeOfCar,
-    this.currentOdometer,
+    this.lastOdometer,
   });
 
   CarModel.fromJson(Map<String, dynamic> json) {
@@ -24,7 +24,7 @@ class CarModel {
     vin = json['vin'];
     carModel = json['carModel'];
     typeOfCar = json['typeOfCar'];
-    currentOdometer = json['currentOdometer'];
+    lastOdometer = json['lastOdometer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,7 +35,7 @@ class CarModel {
     data['vin'] = vin;
     data['carModel'] = carModel;
     data['typeOfCar'] = typeOfCar;
-    data['currentOdometer'] = currentOdometer;
+    data['lastOdometer'] = lastOdometer;
     return data;
   }
 
@@ -47,7 +47,7 @@ class CarModel {
       'vin': vin,
       'carModel': carModel,
       'typeOfCar': typeOfCar,
-      'currentOdometer': currentOdometer,
+      'lastOdometer': lastOdometer,
     };
   }
 }

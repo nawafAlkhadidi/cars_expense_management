@@ -78,13 +78,16 @@ class ExpenseTypesScreen extends ConsumerWidget {
                           columnWidthMode: ColumnWidthMode.fitByColumnName,
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           autoFitPadding: const EdgeInsets.all(2.0),
-                          label: Container(padding: const EdgeInsets.all(7.0), alignment: Alignment.center, child: const Text('#'))),
+                          label: Container(
+                              padding: const EdgeInsets.all(7.0),
+                              alignment: Alignment.center,
+                              child: Text('#', style: Theme.of(context).textTheme.labelMedium))),
                       GridColumn(
                           columnName: 'name',
                           filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
                           label: Container(
                               alignment: Alignment.center,
-                              child: Text('اسم الصنف', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelSmall))),
+                              child: Text('اسم الصنف', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                     ],
                   ),
                 ),

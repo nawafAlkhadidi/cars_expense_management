@@ -14,17 +14,19 @@ class BillsViewModel extends ChangeNotifier {
 
   TextEditingController? dataController,
       carNameController,
-      carOdometerController,
-      carCurrentOdometerController,
+      lastOdometerController,
+      newOdometerController,
       distanceController,
       priceController,
       nameController,
-      detailsController;
+      detailsController,
+      expenseController;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   int indexPage = 0;
   BillModels bills = BillModels();
   CarModel car = CarModel();
+  TypeOfExpenseModels expenseType = TypeOfExpenseModels();
   List<CarModel> cars = [];
 
   void setIndex(int newIndex) {
@@ -35,12 +37,13 @@ class BillsViewModel extends ChangeNotifier {
   void initController() {
     dataController = TextEditingController();
     carNameController = TextEditingController();
-    carOdometerController = TextEditingController();
-    carCurrentOdometerController = TextEditingController();
+    lastOdometerController = TextEditingController();
+    newOdometerController = TextEditingController();
     distanceController = TextEditingController();
     priceController = TextEditingController();
     nameController = TextEditingController();
     detailsController = TextEditingController();
+    expenseController = TextEditingController();
   }
 
   Future<List<CarModel>> getCars() async {
@@ -73,41 +76,102 @@ class BillsViewModel extends ChangeNotifier {
             backgroundColor: Colors.white,
             surfaceTintColor: Colors.white,
             insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
-            child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                height: 450,
-                width: 450,
-                child: FutureBuilder<List<CarModel>>(
-                    future: carDataSource.getCars(),
-                    builder: (context, dataSnapshot) {
-                      if (dataSnapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      }
-                      return ListView.builder(
-                          padding: const EdgeInsets.only(top: 10),
-                          itemCount: dataSnapshot.data?.length ?? 0,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: false,
-                          itemBuilder: (_, index) => ListTile(
-                                onTap: () {
-                                  selectCar(selectedCar: dataSnapshot.data![index]);
-                                  Navigator.pop(context);
-                                },
-                                leading: CircleAvatar(backgroundColor: AppBrand.drawerButtonColor, child: Text(dataSnapshot.data![index].id.toString())),
-                                title: Text(
-                                    "${dataSnapshot.data![index].typeOfCar!} | ${dataSnapshot.data![index].plateNumbers!} | ${dataSnapshot.data![index].plateLetters.toString()}"),
-                                subtitle: Text(dataSnapshot.data![index].vin.toString()),
-                                trailing: const Icon(Icons.arrow_forward_ios),
-                              ));
-                    }))).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 30, right: 20),
+                  child: Text("أختر السيارة من القائمة التالية :", style: TextStyle(fontSize: 19)),
+                ),
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    height: 450,
+                    width: 450,
+                    child: FutureBuilder<List<CarModel>>(
+                        future: carDataSource.getCars(),
+                        builder: (context, dataSnapshot) {
+                          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          return ListView.builder(
+                              padding: const EdgeInsets.only(top: 10),
+                              itemCount: dataSnapshot.data?.length ?? 0,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: false,
+                              itemBuilder: (_, index) => ListTile(
+                                    onTap: () {
+                                      selectCar(selectedCar: dataSnapshot.data![index]);
+                                      Navigator.pop(context);
+                                    },
+                                    leading: CircleAvatar(backgroundColor: AppBrand.drawerButtonColor, child: Text(dataSnapshot.data![index].id.toString())),
+                                    title: Text(
+                                        "${dataSnapshot.data![index].typeOfCar!} | ${dataSnapshot.data![index].plateNumbers!} | ${dataSnapshot.data![index].plateLetters.toString()}"),
+                                    subtitle: Text(dataSnapshot.data![index].vin.toString()),
+                                    trailing: const Icon(Icons.arrow_forward_ios),
+                                  ));
+                        })),
+              ],
+            )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
       },
     );
+  }
+
+  expensePickerDialog({required BuildContext context}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                    padding: EdgeInsets.only(top: 30, right: 20), child: Text("أختر نوع المصروف من القائمة التالية :", style: TextStyle(fontSize: 19))),
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    height: 450,
+                    width: 450,
+                    child: FutureBuilder<List<TypeOfExpenseModels>>(
+                        future: locator<ExpenseTypesRepositories>().getAllExpense(),
+                        builder: (context, dataSnapshot) {
+                          if (dataSnapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          }
+                          return ListView.builder(
+                              padding: const EdgeInsets.only(top: 10),
+                              itemCount: dataSnapshot.data?.length ?? 0,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: false,
+                              itemBuilder: (_, index) => ListTile(
+                                    onTap: () {
+                                      selectExpense(selectedExpense: dataSnapshot.data![index]);
+                                      Navigator.pop(context);
+                                    },
+                                    leading: CircleAvatar(backgroundColor: AppBrand.drawerButtonColor, child: Text(dataSnapshot.data![index].id.toString())),
+                                    title: Text(dataSnapshot.data![index].name!, style: const TextStyle(fontSize: 20)),
+                                    trailing: const Icon(Icons.arrow_forward_ios),
+                                  ));
+                        })),
+              ],
+            )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+      },
+    );
+  }
+
+  selectExpense({TypeOfExpenseModels? selectedExpense}) {
+    expenseType = selectedExpense!;
+    expenseController?.text = selectedExpense.name ?? "";
   }
 
   selectCar({CarModel? selectedCar}) {
     car = selectedCar!;
     carNameController?.text = "${car.typeOfCar!} | ${car.plateNumbers!} | ${car.plateLetters.toString()}";
-    carOdometerController?.text = car.currentOdometer.toString();
+    lastOdometerController?.text = car.lastOdometer.toString();
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs data, BuildContext context) {
@@ -117,6 +181,13 @@ class BillsViewModel extends ChangeNotifier {
 
   claer() {
     dataController?.clear();
+  }
+
+  calculateODM(String newValue) {
+    int? newODM = int.tryParse(newOdometerController!.value.text);
+    int? lastODM = int.tryParse(lastOdometerController!.value.text);
+    String distance = (newODM! - lastODM!).toString();
+    distanceController?.text = distance;
   }
 
   Widget getScreen(int index) {
@@ -129,22 +200,24 @@ class BillsViewModel extends ChangeNotifier {
   }
 
   void addbill({required BuildContext context}) async {
-    // billsRepositories.getAllBills();
-    //    if (globalKey.currentState!.validate()) {
-    //     bills.price = double.tryParse(priceController.value.text);
-    //     bills.details = detailsController.value.text;
-    //     bills.personName = nameController.value.text;
-    //     bills.createdAt = dataController.value.text;
-    //     bills.distance = distanceController.value.text;
-    //     bills.currentOdometer = carCurrentOdometerController.value.text;
-    //     bills.previousOdometer = carOdometerController.value.text;
-    //     // bills.carId = carNameController.value.text;
-    //     bills.carId = 4;
-    //     bills.expenseId = 2;
-    //     bool status = await billsRepositories.addNewBills(bills);
-    //     if (status) {
-    //       setIndex(0);
-    //     }
-    //   //   //  }
+    // print(nameController?.value.text);
+    billsRepositories.getAllBills();
+    if (globalKey.currentState!.validate()) {
+      bills.createdAt = dataController?.value.text;
+      bills.carId = car.id!;
+      bills.previousOdometer = int.tryParse(lastOdometerController!.value.text);
+      bills.newOdometer = int.tryParse(newOdometerController!.value.text);
+      bills.distance = int.tryParse(distanceController!.value.text);
+      bills.expenseId = expenseType.id!;
+      bills.personName = nameController?.value.text;
+      bills.price = double.tryParse(priceController!.value.text);
+      bills.details = detailsController?.value.text;
+
+      bool status = await billsRepositories.addNewBills(bills);
+      if (status) {
+        setIndex(0);
+      }
+      //   //   //  }
+    }
   }
 }

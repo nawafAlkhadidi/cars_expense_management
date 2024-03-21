@@ -1,17 +1,23 @@
-import 'dart:io';
-
 import 'library.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DatabaseService().database;
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    setWindowTitle("برنامج ادارة مصاريف السيارات");
-    // setWindowVisibility(visible: false);
-    // setWindowMaxSize(const Size(2200, 1900));
-    // setWindowMinSize(const Size(700, 600));
-    setWindowMinSize(const Size(900, 600));
-  }
+
+  await windowManager.ensureInitialized();
+  WindowManager.instance.setMinimizable(false);
+
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(1200, 650),
+    center: true,
+    backgroundColor: Colors.transparent,
+    skipTaskbar: false,
+    titleBarStyle: TitleBarStyle.hidden,
+  );
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
   setupLocator();
   runApp(const ProviderScope(child: MyApp()));
 }
