@@ -1,4 +1,5 @@
 import 'package:cars_expense_management/library.dart';
+import 'package:cars_expense_management/screens/bills/data_source/bills_data_source.dart';
 
 final locator = GetIt.instance;
 
@@ -16,5 +17,7 @@ void setupLocator() {
   // locator.registerFactory(() => AddExpenseTypeViewModel(locator()));
 
   locator.registerLazySingleton(() => BillsRepositories(locator()));
-  locator.registerFactory(() => BillsViewModel(locator(), locator()));
+  locator.registerLazySingleton(() => BillDataSource());
+
+  locator.registerFactory(() => BillsViewModel(locator(), locator(), locator()));
 }

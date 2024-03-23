@@ -13,7 +13,7 @@ class DatabaseService {
   Future<Database> _initDatabase() async {
     String path = await getDatabasesPath();
     return await openDatabase(
-      join(path, 'your_database10_name.db'),
+      join(path, 'your_database11_name.db'),
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE cars (
@@ -31,7 +31,7 @@ class DatabaseService {
         await db.execute('''
           CREATE TABLE types_of_expense (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT
+            expenseName TEXT
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )

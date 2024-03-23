@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/cars/cars_layout.dart';
 import 'package:cars_expense_management/screens/expense_types/expense_types_layout.dart';
@@ -37,8 +35,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).size);
-    print(Platform.isMacOS);
+    // print(MediaQuery.of(context).size);
     return Scaffold(
       backgroundColor: AppBrand.backgroundColor,
       // drawerEdgeDragWidth: 250,

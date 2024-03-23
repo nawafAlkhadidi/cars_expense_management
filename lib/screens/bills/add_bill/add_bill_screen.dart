@@ -1,5 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:flutter/material.dart';
 
 class AddBillScreen extends ConsumerStatefulWidget {
   const AddBillScreen({super.key});
@@ -94,7 +93,7 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             SizedBox(height: 50, child: Center(child: Text("السيارة", style: Theme.of(context).textTheme.labelMedium))),
                             SizedBox(width: size.width * 0.012),
                             SizedBox(
-                              width: size.width * 0.38,
+                              width: size.width * 0.35,
                               child: myTextFiled(
                                 height: 80,
                                 onTap: () => viewModel.carsPickerDialog(context: context),
@@ -168,7 +167,9 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                                   if (value == null || value.isEmpty) {
                                     return "الرجاء إدخال مسافة العداد الحالية";
                                   }
-
+                                  if (int.parse(value) <= int.parse(viewModel.lastOdometerController!.value.text)) {
+                                    return "الرجاء إدخال مسافة عداد صحيح";
+                                  }
                                   return null;
                                 },
                               ),
@@ -271,6 +272,7 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                                 onTap: () => viewModel.expensePickerDialog(context: context),
                                 keyboardType: TextInputType.text,
                                 controller: viewModel.expenseController,
+                                suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.singleLineFormatter,
                                 ],

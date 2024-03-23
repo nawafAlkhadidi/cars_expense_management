@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_collection_literals
-
 class BillModels {
   int? id;
   int? carId;
@@ -15,8 +13,7 @@ class BillModels {
   String? updatedAt;
   int? plateNumbers;
   String? plateLetters;
-  String? vin;
-  int? carModel;
+  String? expenseName;
   String? typeOfCar;
 
   BillModels({
@@ -34,8 +31,7 @@ class BillModels {
     this.updatedAt,
     this.plateNumbers,
     this.plateLetters,
-    this.vin,
-    this.carModel,
+    this.expenseName,
     this.typeOfCar,
   });
 
@@ -53,14 +49,13 @@ class BillModels {
     updatedAt = json['updated_at'];
     plateNumbers = json['plateNumbers'];
     plateLetters = json['plateLetters'];
-    vin = json['vin'];
-    carModel = json['carModel'];
     newOdometer = json['new_odometer'];
+    expenseName = json['expenseName'];
     typeOfCar = json['typeOfCar'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['car_id'] = carId;
     data['expense_id'] = expenseId;
@@ -74,11 +69,11 @@ class BillModels {
     data['updated_at'] = updatedAt;
     data['plateNumbers'] = plateNumbers;
     data['plateLetters'] = plateLetters;
-    data['vin'] = vin;
-    data['carModel'] = carModel;
     data['lastOdometer'] = lastOdometer;
-    data['typeOfCar'] = typeOfCar;
     data['new_odometer'] = newOdometer;
+    data['expenseName'] = expenseName;
+    data['typeOfCar'] = typeOfCar;
+
     return data;
   }
 

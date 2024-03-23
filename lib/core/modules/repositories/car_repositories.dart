@@ -24,12 +24,19 @@ class CarRepositories {
   Future<bool> deleteTheCar(int carID) async {
     Database db = await databaseService.database;
     await db.delete('cars', where: 'id = ?', whereArgs: [carID]);
+    // await db.('cars', where: 'id = ?', whereArgs: [carID]);
     return true;
   }
 
   Future<bool> upadteTheCar(int carID, CarModel car) async {
     Database db = await databaseService.database;
     await db.update('cars', car.toMap(), where: 'id = ?', whereArgs: [carID]);
+    return true;
+  }
+
+  Future<bool> upadteODM({int? carID, int? newOdometer}) async {
+    Database db = await databaseService.database;
+    await db.update('cars', {'lastOdometer': newOdometer}, where: 'id = ?', whereArgs: [carID]);
     return true;
   }
 }
