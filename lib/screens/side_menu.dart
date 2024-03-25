@@ -14,7 +14,7 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 250,
-      color: AppBrand.mainColor,
+      color: AppBrand.drawerbackgroundColor,
       child: Column(
         children: [
           Column(
@@ -37,7 +37,7 @@ class SideMenu extends StatelessWidget {
                     child: Text(
                   "بًرمج بـ♥️ بواسطة نواف الخديدي",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: Colors.white),
+                  style: TextStyle(fontSize: 15, color: Colors.black),
                 ))),
           )
         ],
@@ -72,11 +72,12 @@ class DrawerListTile extends StatelessWidget {
         child: ListTile(
           onTap: press,
           horizontalTitleGap: 0.0,
-          leading: SvgPicture.asset(svgSrc, colorFilter: ColorFilter.mode(isColor ? AppBrand.drawerButtonColor : Colors.white, BlendMode.srcIn), height: 25),
-          trailing: Icon(Icons.arrow_forward_ios, size: 15, color: isColor ? AppBrand.drawerButtonColor : Colors.white),
+          leading:
+              SvgPicture.asset(svgSrc, colorFilter: ColorFilter.mode(isColor ? AppBrand.drawerButtonColor : AppBrand.mainColor, BlendMode.srcIn), height: 25),
+          trailing: Icon(Icons.arrow_forward_ios, size: 15, color: isColor ? AppBrand.drawerButtonColor : AppBrand.mainColor),
           title: Padding(
               padding: const EdgeInsets.only(top: 5, right: 15, left: 15),
-              child: Text(title, style: TextStyle(color: isColor ? AppBrand.drawerButtonColor : Colors.white, fontSize: 19))),
+              child: Text(title, style: TextStyle(color: isColor ? AppBrand.drawerButtonColor : AppBrand.mainColor, fontSize: 18))),
         ),
       ),
     );

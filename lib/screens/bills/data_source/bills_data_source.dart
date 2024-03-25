@@ -19,12 +19,12 @@ class BillDataSource extends DataGridSource {
         DataGridCell<String>(columnName: 'date', value: bills.createdAt),
         DataGridCell<String>(columnName: 'car', value: "${bills.typeOfCar} | ${bills.plateNumbers} | ${bills.plateLetters}"),
         DataGridCell<String>(columnName: 'expenseName', value: bills.expenseName),
-        DataGridCell<double>(columnName: 'price', value: bills.price),
+        DataGridCell<String>(columnName: 'price', value: "${bills.price} ريال"),
         DataGridCell<String>(columnName: 'details', value: bills.details),
         DataGridCell<String>(columnName: 'personName', value: bills.personName),
         DataGridCell<int>(columnName: 'previousOdometer', value: bills.previousOdometer),
         DataGridCell<int>(columnName: 'newOdometer', value: bills.newOdometer),
-        // DataGridCell<int>(columnName: 'distance', value: bills.distance),
+        DataGridCell<int>(columnName: 'distance', value: bills.distance),
 
         // DataGridCell<int>(columnName: 'lastOdometer', value: bills.lastOdometer),
       ]);

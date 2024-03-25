@@ -54,6 +54,9 @@ dependencies:
   syncfusion_flutter_core: ^24.2.9
   syncfusion_flutter_xlsio: ^24.2.9
   window_manager: ^0.3.8
+  syncfusion_flutter_datagrid_export: ^24.2.9
+  syncfusion_flutter_pdf: ^24.2.9
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:

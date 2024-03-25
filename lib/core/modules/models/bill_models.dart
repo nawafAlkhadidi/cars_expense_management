@@ -1,20 +1,20 @@
 class BillModels {
-  int? id;
+  int? id; //
   int? carId;
   int? expenseId;
-  double? price;
-  String? details;
-  String? personName;
+  double? price; //
+  String? details; //
+  String? personName; //
   int? lastOdometer;
   int? newOdometer;
-  int? previousOdometer;
-  int? distance;
-  String? createdAt;
+  int? previousOdometer; //
+  int? distance; //
+  String? createdAt; //
   String? updatedAt;
-  int? plateNumbers;
-  String? plateLetters;
-  String? expenseName;
-  String? typeOfCar;
+  int? plateNumbers; //
+  String? plateLetters; //
+  String? expenseName; //
+  String? typeOfCar; //
 
   BillModels({
     this.id,
@@ -36,7 +36,7 @@ class BillModels {
   });
 
   BillModels.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['bill_id'];
     carId = json['car_id'];
     expenseId = json['expense_id'];
     price = json['price'];
@@ -56,7 +56,7 @@ class BillModels {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+    data['bill_id'] = id;
     data['car_id'] = carId;
     data['expense_id'] = expenseId;
     data['price'] = price;
@@ -79,7 +79,7 @@ class BillModels {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      // 'id': id,
       'car_id': carId,
       'expense_id': expenseId,
       'price': price,

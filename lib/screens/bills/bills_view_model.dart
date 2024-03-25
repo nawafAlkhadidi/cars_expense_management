@@ -75,6 +75,48 @@ class BillsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  exportDialog({required BuildContext context}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              width: 350,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                      child: GFButton(
+                    size: 50,
+                    fullWidthButton: true,
+                    onPressed: () => null,
+                    text: "PDF",
+                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                    shape: GFButtonShape.standard,
+                    color: AppBrand.drawerButtonColor,
+                  )),
+                  SizedBox(width: 20, height: 20),
+                  Flexible(
+                      child: GFButton(
+                    size: 50,
+                    fullWidthButton: true,
+                    onPressed: () => null,
+                    text: "Excel",
+                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                    shape: GFButtonShape.standard,
+                    color: AppBrand.drawerButtonColor,
+                  )),
+                ],
+              ),
+            )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+      },
+    );
+  }
+
   dateRangePickerDialog({required BuildContext context}) {
     return showDialog(
       context: context,
@@ -289,126 +331,6 @@ class BillsViewModel extends ChangeNotifier {
     }
   }
 
-  Widget _buildRow(
-      {required TextEditingController controller, required String columnName, required TextInputFormatter filteringTextInput, required int length}) {
-    final TextInputType keyboardType = filteringTextInput == FilteringTextInputFormatter.digitsOnly ? TextInputType.number : TextInputType.text;
-
-    return Row(
-      children: <Widget>[
-        Container(width: 150, padding: const EdgeInsets.symmetric(vertical: 15), child: Text(columnName)),
-        SizedBox(
-          width: 150,
-          child: TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) {
-                return "يجب ألا يكون الحقل فارغًا";
-              }
-              if (value.length > length) {
-                return "الحدد المسموح $length";
-              }
-              return null;
-            },
-            controller: controller,
-            keyboardType: keyboardType,
-            inputFormatters: <TextInputFormatter>[filteringTextInput],
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _buildAlertDialogContent() {
-    return Column(
-      children: <Widget>[
-        // _buildRow(controller: expenNameController!, columnName: 'اسم الصتف', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 5),
-      ],
-    );
-  }
-
-  void _updateTextFieldContext(DataGridRow row) {
-    initController();
-    final String? id = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'id')?.value.toString();
-    // expenIdController!.text = id ?? "";
-    final String? expenName = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'name')?.value.toString();
-    // expenNameController!.text = expenName ?? "";
-  }
-
-  List<Widget> _buildActionButtons(DataGridRow row, BuildContext buildContext) {
-    return <Widget>[
-      TextButton(
-          onPressed: () => _processCellUpdate(row, buildContext),
-          child: const Text('حفظ', style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16))),
-      TextButton(
-          onPressed: () => Navigator.pop(buildContext),
-          child: const Text('إلغاء', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 16)))
-    ];
-  }
-
-  void _processCellUpdate(DataGridRow row, BuildContext buildContext) async {
-    // if (_formKey.currentState!.validate()) {
-    //   newExpense.id = int.parse(expenIdController!.value.text);
-    //   newExpense.name = expenNameController!.value.text;
-
-    //   // bool status = await expenseTypesRepositories.upadteType(newExpense.id!, newExpense);
-    //   if (status) {
-    //     final int rowIndex = billDataSource.rows.indexOf(row);
-    //     billDataSource.rows[rowIndex] = DataGridRow(cells: [
-    //       DataGridCell<int>(columnName: 'id', value: newExpense.id),
-    //       DataGridCell<String>(columnName: 'plateNumbers', value: newExpense.name),
-    //     ]);
-    //     // carDataSource.buildDataGridRows();
-    //     billDataSource.updateDataSource();
-    //     Navigator.pop(buildContext);
-
-    //     notifyListeners();
-    //   }
-    // }
-  }
-
-  /// Editing the DataGridRow
-  void _handleEditWidgetTap(DataGridRow row, BuildContext context) {
-    _updateTextFieldContext(row);
-    showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        scrollable: true,
-        alignment: Alignment.center,
-        title: const Center(child: Text('تعديل الفاتورة', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))),
-        actions: _buildActionButtons(row, context),
-        content: Scrollbar(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Form(
-              key: _formKey,
-              child: _buildAlertDialogContent(),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildStartSwipeWidget(BuildContext context, DataGridRow row, int rowIndex) {
-    return GestureDetector(
-      onTap: () => _handleEditWidgetTap(row, context),
-      child: Container(
-        color: Colors.blueAccent,
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.edit, color: Colors.white, size: 20),
-            SizedBox(width: 16.0),
-            Text(
-              'تعديل',
-              style: TextStyle(color: Colors.white, fontSize: 15),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   void addbill({required BuildContext context}) async {
     if (globalKey.currentState!.validate()) {
       bill.createdAt = dataController?.value.text;
@@ -424,7 +346,10 @@ class BillsViewModel extends ChangeNotifier {
       bool status = await billsRepositories.addNewBills(bill);
       if (status) {
         bool isUpdate = await carRepositories.upadteODM(carID: car.id, newOdometer: int.tryParse(newOdometerController!.value.text)!);
-        if (isUpdate) setIndex(0);
+        if (isUpdate) {
+          getBills();
+          setIndex(0);
+        }
       }
     }
   }

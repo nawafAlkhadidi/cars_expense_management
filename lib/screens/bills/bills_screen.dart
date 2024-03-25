@@ -1,12 +1,34 @@
+import 'dart:io';
+
+// import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/library.dart';
+import 'package:cars_expense_management/utils/helpers/save_file_mobile.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
+import 'package:syncfusion_flutter_datagrid_export/export.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' show Workbook;
 
 class BillsScreen extends ConsumerWidget {
   const BillsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
+    void x() async {
+      // final Workbook workbook = key.currentState!.exportToExcelWorkbook();
+      // final List<int> bytes = workbook.saveAsStream();
+      // File('DataGrid.xlsx').writeAsBytes(bytes, flush: true);
+      // await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.xlsx');
+
+      PdfDocument document = key.currentState!.exportToPdfDocument();
+      final List<int> bytes = document.saveSync();
+      await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
+
+      // File('DataGrid2.pdf').writeAsBytes(bytes);
+    }
+
     final viewModel = ref.watch(billsViewModelProvider);
     // Size size = MediaQuery.sizeOf(context);
     return SafeArea(
@@ -33,13 +55,13 @@ class BillsScreen extends ConsumerWidget {
                     ),
                   ).animate().scale(),
                   const SizedBox(width: 30),
-                  const Flexible(
+                  Flexible(
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: null,
+                      onPressed: () => viewModel.exportDialog(context: context),
                       text: "تصدير",
-                      textStyle: TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                      textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,
                       color: AppBrand.mainColor,
                     ),
@@ -47,95 +69,111 @@ class BillsScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            DecoratedBox(
-              decoration: viewModel.drawBorder(),
-              child: SfDataGridTheme(
-                data: SfDataGridThemeData(
-                    brightness: Brightness.light,
-                    headerColor: AppBrand.tableHeaderColor,
-                    gridLineStrokeWidth: 1.5,
-                    rowHoverColor: Colors.grey.withOpacity(0.2),
-                    frozenPaneLineColor: Colors.grey.withOpacity(0.3),
-                    headerHoverColor: Colors.grey.withOpacity(0.3),
-                    sortIconColor: AppBrand.mainColor,
-                    gridLineColor: Colors.grey.withOpacity(0.3),
-                    columnResizeIndicatorColor: Colors.black12,
-                    filterIconHoverColor: Colors.white,
-                    filterIconColor: AppBrand.mainColor,
-
-                    // sortIcon: const SizedBox(),
-                    currentCellStyle: const DataGridCurrentCellStyle(borderColor: AppBrand.backgroundDrawer, borderWidth: 400)),
-                child: SfDataGrid(
-                  // key: _key,
-                  source: viewModel.billDataSource,
-                  columnWidthMode: ColumnWidthMode.fill,
-                  endSwipeActionsBuilder: viewModel.buildEndSwipeWidget,
-                  startSwipeActionsBuilder: viewModel.buildStartSwipeWidget,
-                  allowSwiping: true,
-                  showHorizontalScrollbar: true,
-                  allowColumnsResizing: true,
-                  allowColumnsDragging: true,
-                  gridLinesVisibility: GridLinesVisibility.both,
-                  allowTriStateSorting: true,
-                  columnResizeMode: ColumnResizeMode.onResizeEnd,
-                  allowSorting: true,
-                  allowFiltering: true,
-                  footerFrozenColumnsCount: 0,
-                  columns: <GridColumn>[
-                    GridColumn(
-                        columnName: 'id',
-                        columnWidthMode: ColumnWidthMode.fitByColumnName,
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        autoFitPadding: const EdgeInsets.all(2.0),
-                        label: Container(
-                            padding: const EdgeInsets.all(7.0), alignment: Alignment.center, child: Text('#', style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'date',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        columnWidthMode: ColumnWidthMode.fitByColumnName,
-                        label: Container(
-                            alignment: Alignment.center, child: Text('التاريخ', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'car',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        // columnWidthMode: ColumnWidthMode.fitByCellValue,
-                        label: Container(
-                            alignment: Alignment.center, child: Text('السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'expenseName',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        label: Container(
-                            alignment: Alignment.center, child: Text('المصروف', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        columnName: 'price',
-                        columnWidthMode: ColumnWidthMode.fitByCellValue,
-                        label: Container(
-                            alignment: Alignment.center, child: Text('السعر', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        columnName: 'details',
-                        label: Container(
-                            alignment: Alignment.center, child: Text('التفاصيل', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'personName',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        label: Container(
-                            alignment: Alignment.center,
-                            child: Text('اسم الشخص', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'previousOdometer',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        label: Container(
-                            alignment: Alignment.center,
-                            child: Text(' المسافة السابقة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                    GridColumn(
-                        columnName: 'newOdometer',
-                        filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                        label: Container(
-                            alignment: Alignment.center,
-                            child: Text('المسافة الجديد', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
-                  ],
+            Expanded(
+              child: DecoratedBox(
+                decoration: viewModel.drawBorder(),
+                child: SfDataGridTheme(
+                  data: SfDataGridThemeData(
+                      brightness: Brightness.light,
+                      headerColor: AppBrand.tableHeaderColor,
+                      gridLineStrokeWidth: 1.5,
+                      rowHoverColor: Colors.grey.withOpacity(0.2),
+                      frozenPaneLineColor: Colors.grey.withOpacity(0.3),
+                      headerHoverColor: Colors.grey.withOpacity(0.3),
+                      sortIconColor: AppBrand.mainColor,
+                      gridLineColor: Colors.grey.withOpacity(0.3),
+                      columnResizeIndicatorColor: Colors.black12,
+                      filterIconHoverColor: Colors.white,
+                      filterIconColor: AppBrand.mainColor,
+                      currentCellStyle: const DataGridCurrentCellStyle(borderColor: AppBrand.backgroundDrawer, borderWidth: 400)),
+                  child: SfDataGrid(
+                    key: key,
+                    source: viewModel.billDataSource,
+                    // columnWidthMode: ColumnWidthMode.fill,
+                    endSwipeActionsBuilder: viewModel.buildEndSwipeWidget,
+                    // startSwipeActionsBuilder: viewModel.buildStartSwipeWidget,
+                    allowSwiping: true,
+                    showHorizontalScrollbar: true,
+                    allowColumnsResizing: true,
+                    allowColumnsDragging: true,
+                    gridLinesVisibility: GridLinesVisibility.both,
+                    allowTriStateSorting: true,
+                    columnResizeMode: ColumnResizeMode.onResizeEnd,
+                    allowSorting: true,
+                    allowFiltering: true,
+                    isScrollbarAlwaysShown: true,
+                    // onCellTap: (details) => print(details.column.),
+                    // on
+                    // footerFrozenColumnsCount: 0,
+                    defaultColumnWidth: 150,
+                    columns: <GridColumn>[
+                      GridColumn(
+                          columnName: 'id',
+                          columnWidthMode: ColumnWidthMode.fitByColumnName,
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          autoFitPadding: const EdgeInsets.all(2.0),
+                          label: Container(
+                              padding: const EdgeInsets.all(7.0),
+                              alignment: Alignment.center,
+                              child: Text('#', style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'date',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          columnWidthMode: ColumnWidthMode.fitByColumnName,
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('التاريخ', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'car',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          columnWidthMode: ColumnWidthMode.fitByCellValue,
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('السيارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'expenseName',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('المصروف', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          columnName: 'price',
+                          // columnWidthMode: ColumnWidthMode.fitByCellValue,
+                          label: Container(
+                              alignment: Alignment.center, child: Text('السعر', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          columnName: 'details',
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('التفاصيل', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'personName',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('اسم الشخص', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'previousOdometer',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text(' العداد السابق', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'newOdometer',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('العداد الجديد', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                      GridColumn(
+                          columnName: 'distance',
+                          filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          label: Container(
+                              alignment: Alignment.center,
+                              child: Text('المسافة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                    ],
+                  ),
                 ),
               ),
             ),

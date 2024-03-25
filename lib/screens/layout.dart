@@ -59,7 +59,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             //   ),
             // ),
 
-            const VerticalDivider(thickness: 1, width: 1),
+            const VerticalDivider(thickness: 0.2, width: 3, color: Colors.grey),
             // This is the main content.
             Expanded(
               flex: 5,
