@@ -35,36 +35,19 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size);
     return Scaffold(
       backgroundColor: AppBrand.backgroundColor,
-      // drawerEdgeDragWidth: 250,
       restorationId: "7",
-      // drawerEnableOpenDragGesture: false
       extendBody: true,
       drawerScrimColor: AppBrand.drawerButtonColor,
       endDrawerEnableOpenDragGesture: true,
-      // drawer: SideMenu(tab: onTabIcon, indexPage: _selectedIndex),
       body: SafeArea(
         child: Row(
           children: <Widget>[
             SideMenu(tab: onTabIcon, indexPage: _selectedIndex),
-            // Expanded(
-            //   // default flex = 1
-            //   flex: 1.,
-            //   // and it takes 1/6 part of the screen
-            //   child: SideMenu(
-            //     tab: onTabIcon,
-            //     indexPage: _selectedIndex,
-            //   ),
-            // ),
 
-            const VerticalDivider(thickness: 0.2, width: 3, color: Colors.grey),
-            // This is the main content.
-            Expanded(
-              flex: 5,
-              child: _getPage(_selectedIndex),
-            ),
+            // const VerticalDivider(thickness: 0.2, width: 3, color: Colors.grey),
+            Expanded(flex: 5, child: _getPage(_selectedIndex)),
           ],
         ),
       ),

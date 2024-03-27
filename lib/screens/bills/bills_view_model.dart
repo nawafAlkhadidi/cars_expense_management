@@ -1,11 +1,12 @@
 // ignore_for_file: use_build_context_synchronously,
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/bills/data_source/bills_data_source.dart';
 import 'package:cars_expense_management/widgets/date_range_picker.dart';
-import 'package:collection/collection.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:intl/intl.dart' show DateFormat;
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' show Worksheet;
+export 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 final billsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<BillsViewModel>());
 
@@ -28,7 +29,7 @@ class BillsViewModel extends ChangeNotifier {
       expenseController;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
 
   int indexPage = 0;
   BillModels bill = BillModels();
@@ -75,6 +76,34 @@ class BillsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void exportToPdf() async {
+
+
+//     final List<int> bytes = document.saveSync();
+//     File('DataGrid.pdf').writeAsBytes(bytes);
+//     await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
+
+    String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
+    PdfDocument document = key.currentState!.exportToPdfDocument();
+    
+    
+    final List<int> bytes = document.saveSync();
+    File('${"bills-$fileName"}.pdf').writeAsBytes(bytes, flush: true);
+    await FileSaveHelper.saveAndLaunchFile(bytes, '${"bills-$fileName"}.pdf');
+  }
+
+  void exportToExcelWorkbook() async {
+    try {
+      String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
+      final Workbook workbook = key.currentState!.exportToExcelWorkbook();
+      final List<int> bytes = workbook.saveAsStream();
+      File('${"bills-$fileName"}.xlsx').writeAsBytes(bytes, flush: true);
+      await FileSaveHelper.saveAndLaunchFile(bytes, '${"bills-$fileName"}.xlsx');
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
   exportDialog({required BuildContext context}) {
     return showDialog(
       context: context,
@@ -91,25 +120,23 @@ class BillsViewModel extends ChangeNotifier {
                 children: [
                   Flexible(
                       child: GFButton(
-                    size: 50,
-                    fullWidthButton: true,
-                    onPressed: () => null,
-                    text: "PDF",
-                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                    shape: GFButtonShape.standard,
-                    color: AppBrand.drawerButtonColor,
-                  )),
-                  SizedBox(width: 20, height: 20),
+                          size: 50,
+                          fullWidthButton: true,
+                          onPressed: () => exportToPdf(),
+                          text: "PDF",
+                          textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                          shape: GFButtonShape.standard,
+                          color: AppBrand.drawerButtonColor)),
+                  const SizedBox(width: 20, height: 20),
                   Flexible(
                       child: GFButton(
-                    size: 50,
-                    fullWidthButton: true,
-                    onPressed: () => null,
-                    text: "Excel",
-                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                    shape: GFButtonShape.standard,
-                    color: AppBrand.drawerButtonColor,
-                  )),
+                          size: 50,
+                          fullWidthButton: true,
+                          onPressed: () => exportToExcelWorkbook(),
+                          text: "Excel",
+                          textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                          shape: GFButtonShape.standard,
+                          color: AppBrand.drawerButtonColor)),
                 ],
               ),
             )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));

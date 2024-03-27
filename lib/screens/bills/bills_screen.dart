@@ -1,34 +1,12 @@
-import 'dart:io';
-
-// import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/library.dart';
-import 'package:cars_expense_management/utils/helpers/save_file_mobile.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_datagrid_export/export.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
-
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' show Workbook;
+export 'package:cars_expense_management/screens/bills/bills_view_model.dart';
 
 class BillsScreen extends ConsumerWidget {
   const BillsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
-    void x() async {
-      // final Workbook workbook = key.currentState!.exportToExcelWorkbook();
-      // final List<int> bytes = workbook.saveAsStream();
-      // File('DataGrid.xlsx').writeAsBytes(bytes, flush: true);
-      // await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.xlsx');
-
-      PdfDocument document = key.currentState!.exportToPdfDocument();
-      final List<int> bytes = document.saveSync();
-      await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
-
-      // File('DataGrid2.pdf').writeAsBytes(bytes);
-    }
-
     final viewModel = ref.watch(billsViewModelProvider);
     // Size size = MediaQuery.sizeOf(context);
     return SafeArea(
@@ -87,11 +65,9 @@ class BillsScreen extends ConsumerWidget {
                       filterIconColor: AppBrand.mainColor,
                       currentCellStyle: const DataGridCurrentCellStyle(borderColor: AppBrand.backgroundDrawer, borderWidth: 400)),
                   child: SfDataGrid(
-                    key: key,
+                    key: viewModel.key,
                     source: viewModel.billDataSource,
-                    // columnWidthMode: ColumnWidthMode.fill,
                     endSwipeActionsBuilder: viewModel.buildEndSwipeWidget,
-                    // startSwipeActionsBuilder: viewModel.buildStartSwipeWidget,
                     allowSwiping: true,
                     showHorizontalScrollbar: true,
                     allowColumnsResizing: true,

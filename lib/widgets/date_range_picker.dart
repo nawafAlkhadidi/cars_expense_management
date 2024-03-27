@@ -1,5 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CustomDateRangePicker extends StatelessWidget {
   final void Function(DateRangePickerSelectionChangedArgs, BuildContext context)? onSelectionChanged;

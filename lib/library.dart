@@ -18,8 +18,7 @@ export 'package:cars_expense_management/screens/settings/settings_screen.dart';
 export 'package:cars_expense_management/screens/side_menu.dart';
 export 'package:cars_expense_management/screens/expense_types/expese_types_screen.dart';
 export 'package:cars_expense_management/screens/bills/add_bill/add_bill_screen.dart';
-export 'package:cars_expense_management/screens/bills/bills_screen.dart';
-export 'package:cars_expense_management/screens/bills/bills_view_model.dart';
+export 'package:cars_expense_management/screens/bills/bills_screen.dart' hide SelectionChangedCallback;
 export 'package:cars_expense_management/screens/cars/data_source/cars_data_source.dart';
 export 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 
@@ -32,6 +31,13 @@ export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:flutter_riverpod/flutter_riverpod.dart';
 export 'package:window_manager/window_manager.dart';
 export 'package:sqflite/sqflite.dart';
+export 'package:syncfusion_flutter_datepicker/datepicker.dart';
+export 'package:intl/intl.dart' show DateFormat;
+export 'package:syncfusion_flutter_datagrid_export/export.dart';
+export 'package:syncfusion_flutter_pdf/pdf.dart';
+export 'package:syncfusion_flutter_xlsio/xlsio.dart' show Workbook;
+export 'package:cars_expense_management/utils/helpers/save_file_mobile.dart';
+
 // export 'package:provider/provider.dart';
 
 //!utils

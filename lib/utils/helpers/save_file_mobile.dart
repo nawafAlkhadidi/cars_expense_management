@@ -8,21 +8,24 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
 
 // ignore: avoid_classes_with_only_static_members
-///To save the Excel file in the device
+///To save the Excel file in the deviceclass
 class FileSaveHelper {
   static const MethodChannel _platformCall = MethodChannel('launchFile');
 
-  ///To save the Excel file in the device
+  ///To save the pdf file in the device
   static Future<void> saveAndLaunchFile(List<int> bytes, String fileName) async {
     String? path;
-    if (Platform.isAndroid) {
+    if (Platform.isIOS || Platform.isLinux || Platform.isWindows) {
+      final Directory directory = await getApplicationSupportDirectory();
+      path = directory.path;
+    } else if (Platform.isAndroid) {
       final Directory? directory = await getExternalStorageDirectory();
       if (directory != null) {
         path = directory.path;
+      } else {
+        final Directory directory = await getApplicationSupportDirectory();
+        path = directory.path;
       }
-    } else if (Platform.isIOS || Platform.isLinux || Platform.isWindows) {
-      final Directory directory = await getApplicationSupportDirectory();
-      path = directory.path;
     } else {
       path = await PathProviderPlatform.instance.getApplicationSupportPath();
     }
@@ -32,7 +35,7 @@ class FileSaveHelper {
       final Map<String, String> argument = <String, String>{'file_path': '$path/$fileName'};
       try {
         //ignore: unused_local_variable
-        final Future<Map<String, String>?> result = _platformCall.invokeMethod('viewExcel', argument);
+        final Future<Map<String, String>?> result = _platformCall.invokeMethod('viewPdf', argument);
       } catch (e) {
         throw Exception(e);
       }
