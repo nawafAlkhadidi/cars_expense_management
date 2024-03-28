@@ -18,7 +18,7 @@ export 'package:cars_expense_management/screens/settings/settings_screen.dart';
 export 'package:cars_expense_management/screens/side_menu.dart';
 export 'package:cars_expense_management/screens/expense_types/expese_types_screen.dart';
 export 'package:cars_expense_management/screens/bills/add_bill/add_bill_screen.dart';
-export 'package:cars_expense_management/screens/bills/bills_screen.dart' hide SelectionChangedCallback;
+export 'package:cars_expense_management/screens/bills/bills_screen.dart';
 export 'package:cars_expense_management/screens/cars/data_source/cars_data_source.dart';
 export 'package:cars_expense_management/screens/expense_types/data_source/expense_types_data_source.dart';
 
@@ -37,6 +37,8 @@ export 'package:syncfusion_flutter_datagrid_export/export.dart';
 export 'package:syncfusion_flutter_pdf/pdf.dart';
 export 'package:syncfusion_flutter_xlsio/xlsio.dart' show Workbook;
 export 'package:cars_expense_management/utils/helpers/save_file_mobile.dart';
+export 'package:syncfusion_flutter_datagrid/datagrid.dart' hide SelectionChangedCallback;
+export 'package:syncfusion_flutter_core/theme.dart';
 
 // export 'package:provider/provider.dart';
 

@@ -167,7 +167,7 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                                   if (value == null || value.isEmpty) {
                                     return "الرجاء إدخال مسافة العداد الحالية";
                                   }
-                                  if (int.parse(value) <= int.parse(viewModel.lastOdometerController!.value.text)) {
+                                  if (int.parse(value) <= int.parse(viewModel.lastOdometerController.value.text)) {
                                     return "الرجاء إدخال مسافة عداد صحيح";
                                   }
                                   return null;

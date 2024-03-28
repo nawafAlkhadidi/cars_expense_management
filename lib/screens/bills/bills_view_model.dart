@@ -1,12 +1,9 @@
 // ignore_for_file: use_build_context_synchronously,
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/bills/data_source/bills_data_source.dart';
 import 'package:cars_expense_management/widgets/date_range_picker.dart';
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' show Worksheet;
-export 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 final billsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<BillsViewModel>());
 
@@ -18,7 +15,7 @@ class BillsViewModel extends ChangeNotifier {
     getBills();
   }
 
-  TextEditingController? dataController,
+  late TextEditingController dataController,
       carNameController,
       lastOdometerController,
       newOdometerController,
@@ -28,9 +25,8 @@ class BillsViewModel extends ChangeNotifier {
       detailsController,
       expenseController;
 
-  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
-
   int indexPage = 0;
   BillModels bill = BillModels();
   List<BillModels> billsList = [];
@@ -76,21 +72,21 @@ class BillsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void exportToPdf() async {
+//   void exportToPdf() async {
+// //     final List<int> bytes = document.saveSync();
+// //     File('DataGrid.pdf').writeAsBytes(bytes);
+// //     await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
 
+//     String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
+//     PdfDocument document = key.currentState!.exportToPdfDocument();
+
+//     // PdfDocument document = PdfDocument();
+//     // PdfStringFormat
 
 //     final List<int> bytes = document.saveSync();
-//     File('DataGrid.pdf').writeAsBytes(bytes);
-//     await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
-
-    String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
-    PdfDocument document = key.currentState!.exportToPdfDocument();
-    
-    
-    final List<int> bytes = document.saveSync();
-    File('${"bills-$fileName"}.pdf').writeAsBytes(bytes, flush: true);
-    await FileSaveHelper.saveAndLaunchFile(bytes, '${"bills-$fileName"}.pdf');
-  }
+//     File('${"bills-$fileName"}.pdf').writeAsBytes(bytes, flush: true);
+//     await FileSaveHelper.saveAndLaunchFile(bytes, '${"bills-$fileName"}.pdf');
+//   }
 
   void exportToExcelWorkbook() async {
     try {
@@ -104,45 +100,45 @@ class BillsViewModel extends ChangeNotifier {
     }
   }
 
-  exportDialog({required BuildContext context}) {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
-            insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              width: 350,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                      child: GFButton(
-                          size: 50,
-                          fullWidthButton: true,
-                          onPressed: () => exportToPdf(),
-                          text: "PDF",
-                          textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                          shape: GFButtonShape.standard,
-                          color: AppBrand.drawerButtonColor)),
-                  const SizedBox(width: 20, height: 20),
-                  Flexible(
-                      child: GFButton(
-                          size: 50,
-                          fullWidthButton: true,
-                          onPressed: () => exportToExcelWorkbook(),
-                          text: "Excel",
-                          textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                          shape: GFButtonShape.standard,
-                          color: AppBrand.drawerButtonColor)),
-                ],
-              ),
-            )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
-      },
-    );
-  }
+  // exportDialog({required BuildContext context}) {
+  //   return showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return Dialog(
+  //           backgroundColor: Colors.white,
+  //           surfaceTintColor: Colors.white,
+  //           insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
+  //           child: Container(
+  //             padding: const EdgeInsets.all(20),
+  //             width: 350,
+  //             child: Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 Flexible(
+  //                     child: GFButton(
+  //                         size: 50,
+  //                         fullWidthButton: true,
+  //                         onPressed: () => exportToPdf(),
+  //                         text: "PDF",
+  //                         textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+  //                         shape: GFButtonShape.standard,
+  //                         color: AppBrand.drawerButtonColor)),
+  //                 const SizedBox(width: 20, height: 20),
+  //                 Flexible(
+  //                     child: GFButton(
+  //                         size: 50,
+  //                         fullWidthButton: true,
+  //                         onPressed: () => exportToExcelWorkbook(),
+  //                         text: "Excel",
+  //                         textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+  //                         shape: GFButtonShape.standard,
+  //                         color: AppBrand.drawerButtonColor)),
+  //               ],
+  //             ),
+  //           )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+  //     },
+  //   );
+  // }
 
   dateRangePickerDialog({required BuildContext context}) {
     return showDialog(
@@ -261,25 +257,25 @@ class BillsViewModel extends ChangeNotifier {
 
   void selectExpense({TypeOfExpenseModels? selectedExpense}) {
     expenseType = selectedExpense!;
-    expenseController?.text = selectedExpense.name ?? "";
+    expenseController.text = selectedExpense.name ?? "";
   }
 
   selectCar({CarModel? selectedCar}) {
     car = selectedCar!;
-    carNameController?.text = "${car.typeOfCar!} | ${car.plateNumbers!} | ${car.plateLetters.toString()}";
-    lastOdometerController?.text = car.lastOdometer.toString();
+    carNameController.text = "${car.typeOfCar!} | ${car.plateNumbers!} | ${car.plateLetters.toString()}";
+    lastOdometerController.text = car.lastOdometer.toString();
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs data, BuildContext context) {
-    dataController?.text = DateFormat('yyyy/MM/dd').format((data.value));
+    dataController.text = DateFormat('yyyy/MM/dd').format((data.value));
     Navigator.pop(context);
   }
 
   calculateODM(String newValue) {
-    int? newODM = int.tryParse(newOdometerController!.value.text);
-    int? lastODM = int.tryParse(lastOdometerController!.value.text);
+    int? newODM = int.tryParse(newOdometerController.value.text);
+    int? lastODM = int.tryParse(lastOdometerController.value.text);
     String distance = (newODM! - lastODM!).toString();
-    distanceController?.text = distance;
+    distanceController.text = distance;
   }
 
   Widget buildEndSwipeWidget(BuildContext context, DataGridRow row, int rowIndex) {
@@ -360,19 +356,19 @@ class BillsViewModel extends ChangeNotifier {
 
   void addbill({required BuildContext context}) async {
     if (globalKey.currentState!.validate()) {
-      bill.createdAt = dataController?.value.text;
+      bill.createdAt = dataController.value.text;
       bill.carId = car.id!;
-      bill.previousOdometer = int.tryParse(lastOdometerController!.value.text);
-      bill.newOdometer = int.tryParse(newOdometerController!.value.text);
-      bill.distance = int.tryParse(distanceController!.value.text);
+      bill.previousOdometer = int.tryParse(lastOdometerController.value.text);
+      bill.newOdometer = int.tryParse(newOdometerController.value.text);
+      bill.distance = int.tryParse(distanceController.value.text);
       bill.expenseId = expenseType.id!;
-      bill.personName = nameController?.value.text;
-      bill.price = double.tryParse(priceController!.value.text);
-      bill.details = detailsController?.value.text;
+      bill.personName = nameController.value.text;
+      bill.price = double.tryParse(priceController.value.text);
+      bill.details = detailsController.value.text;
 
       bool status = await billsRepositories.addNewBills(bill);
       if (status) {
-        bool isUpdate = await carRepositories.upadteODM(carID: car.id, newOdometer: int.tryParse(newOdometerController!.value.text)!);
+        bool isUpdate = await carRepositories.upadteODM(carID: car.id, newOdometer: int.tryParse(newOdometerController.value.text)!);
         if (isUpdate) {
           getBills();
           setIndex(0);

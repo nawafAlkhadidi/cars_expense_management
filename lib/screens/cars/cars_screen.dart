@@ -1,8 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-// import 'package:syncfusion_flutter_xlsio/xlsio.dart' show Workbook;
-
-// class CarsScreen extends ConsumerStatefulWidget
 
 class CarsScreen extends ConsumerWidget {
   const CarsScreen({super.key});
@@ -34,13 +30,13 @@ class CarsScreen extends ConsumerWidget {
                     ),
                   ).animate().scale(),
                   const SizedBox(width: 30),
-                  const Flexible(
+                  Flexible(
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: null,
+                      onPressed: () => viewModel.exportToExcelWorkbook(),
                       text: "تصدير",
-                      textStyle: TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                      textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,
                       color: AppBrand.mainColor,
                     ),
@@ -67,7 +63,7 @@ class CarsScreen extends ConsumerWidget {
                       // sortIcon: const SizedBox(),
                       currentCellStyle: const DataGridCurrentCellStyle(borderColor: AppBrand.backgroundDrawer, borderWidth: 400)),
                   child: SfDataGrid(
-                    // key: _key,
+                    key: viewModel.key,
                     source: viewModel.carDataSource,
                     columnWidthMode: ColumnWidthMode.fill,
                     endSwipeActionsBuilder: viewModel.buildEndSwipeWidget,

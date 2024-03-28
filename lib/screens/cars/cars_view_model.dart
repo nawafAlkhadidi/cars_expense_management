@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
 import 'package:cars_expense_management/library.dart';
 import 'package:collection/collection.dart';
 
@@ -14,12 +15,12 @@ class CarViewModel extends ChangeNotifier {
   }
 
   List<CarModel> cars = [];
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
   CarModel newCar = CarModel();
   int indexPage = 0;
 
-  TextEditingController? carIdController,
+  late TextEditingController carIdController,
       plateNumbersController,
       plateLettersController,
       typeOfCarController,
@@ -49,6 +50,18 @@ class CarViewModel extends ChangeNotifier {
       default:
         return const CarsScreen();
     }
+  }
+
+  void exportToExcelWorkbook() async {
+//    try {
+    String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
+    final Workbook workbook = key.currentState!.exportToExcelWorkbook();
+    final List<int> bytes = workbook.saveAsStream();
+    File('${"cars-$fileName"}.xlsx').writeAsBytes(bytes, flush: true);
+    await FileSaveHelper.saveAndLaunchFile(bytes, '${"cars-$fileName"}.xlsx');
+    // } catch (e) {
+    // log(e.toString());
+//}
   }
 
   void setDataTable() {
@@ -111,12 +124,12 @@ class CarViewModel extends ChangeNotifier {
 
   void addcar({required BuildContext context}) async {
     if (globalKey.currentState!.validate()) {
-      newCar.plateNumbers = int.tryParse(plateNumbersController!.value.text);
-      newCar.plateLetters = plateLettersController!.value.text;
-      newCar.vin = vinController!.value.text;
-      newCar.carModel = int.tryParse(carModelController!.value.text);
-      newCar.typeOfCar = typeOfCarController!.value.text;
-      newCar.lastOdometer = int.tryParse(lastOdometerController!.value.text);
+      newCar.plateNumbers = int.tryParse(plateNumbersController.value.text);
+      newCar.plateLetters = plateLettersController.value.text;
+      newCar.vin = vinController.value.text;
+      newCar.carModel = int.tryParse(carModelController.value.text);
+      newCar.typeOfCar = typeOfCarController.value.text;
+      newCar.lastOdometer = int.tryParse(lastOdometerController.value.text);
       bool status = await carRepositories.addcar(newCar);
       if (status) {
         getCars();
@@ -149,30 +162,30 @@ class CarViewModel extends ChangeNotifier {
   void _updateTextFieldContext(DataGridRow row) {
     initController();
     final String? carId = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'id')?.value.toString();
-    carIdController!.text = carId ?? "";
+    carIdController.text = carId ?? "";
     final String? plateNumbers = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'plateNumbers')?.value.toString();
-    plateNumbersController!.text = plateNumbers ?? '';
+    plateNumbersController.text = plateNumbers ?? '';
     final String? plateLetters = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'plateLetters')?.value.toString();
-    plateLettersController!.text = plateLetters ?? '';
+    plateLettersController.text = plateLetters ?? '';
     final String? vin = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'vin')?.value;
-    vinController!.text = vin ?? '';
+    vinController.text = vin ?? '';
     final String? typeOfCar = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'typeOfCar')?.value.toString();
-    typeOfCarController!.text = typeOfCar ?? '';
+    typeOfCarController.text = typeOfCar ?? '';
     final String? carModel = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'carModel')?.value.toString();
-    carModelController!.text = carModel ?? '';
-    final String? currentOdometer = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'currentOdometer')?.value.toString();
-    lastOdometerController!.text = currentOdometer ?? '';
+    carModelController.text = carModel ?? '';
+    final String? lastOdometer = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'lastOdometer')?.value.toString();
+    lastOdometerController.text = lastOdometer ?? '';
   }
 
   void _processCellUpdate(DataGridRow row, BuildContext buildContext) async {
-    if (_formKey.currentState!.validate()) {
-      newCar.id = int.tryParse(carIdController!.value.text);
-      newCar.plateNumbers = int.tryParse(plateNumbersController!.value.text);
-      newCar.plateLetters = plateLettersController!.value.text;
-      newCar.vin = vinController!.value.text;
-      newCar.carModel = int.tryParse(carModelController!.value.text);
-      newCar.typeOfCar = typeOfCarController!.value.text;
-      newCar.lastOdometer = int.tryParse(lastOdometerController!.value.text);
+    if (globalKey.currentState!.validate()) {
+      newCar.id = int.tryParse(carIdController.value.text);
+      newCar.plateNumbers = int.tryParse(plateNumbersController.value.text);
+      newCar.plateLetters = plateLettersController.value.text;
+      newCar.vin = vinController.value.text;
+      newCar.carModel = int.tryParse(carModelController.value.text);
+      newCar.typeOfCar = typeOfCarController.value.text;
+      newCar.lastOdometer = int.tryParse(lastOdometerController.value.text);
 
       bool status = await carRepositories.upadteTheCar(newCar.id!, newCar);
       if (status) {
@@ -237,14 +250,14 @@ class CarViewModel extends ChangeNotifier {
   Widget _buildAlertDialogContent() {
     return Column(
       children: <Widget>[
-        _buildRow(controller: plateNumbersController!, columnName: 'أرقام اللوحة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
+        _buildRow(controller: plateNumbersController, columnName: 'أرقام اللوحة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
         _buildRow(
-            controller: plateLettersController!, columnName: 'حروف اللوحة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 5),
+            controller: plateLettersController, columnName: 'حروف اللوحة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 5),
         _buildRow(
-            controller: vinController!, columnName: 'رقم الهيكل', filteringTextInput: FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')), length: 40),
-        _buildRow(controller: typeOfCarController!, columnName: 'نوع السيارة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 10),
-        _buildRow(controller: carModelController!, columnName: 'موديل السيارة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
-        _buildRow(controller: lastOdometerController!, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40)
+            controller: vinController, columnName: 'رقم الهيكل', filteringTextInput: FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')), length: 40),
+        _buildRow(controller: typeOfCarController, columnName: 'نوع السيارة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 10),
+        _buildRow(controller: carModelController, columnName: 'موديل السيارة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
+        _buildRow(controller: lastOdometerController, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40)
       ],
     );
   }
@@ -263,7 +276,7 @@ class CarViewModel extends ChangeNotifier {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Form(
-              key: _formKey,
+              key: globalKey,
               child: _buildAlertDialogContent(),
             ),
           ),

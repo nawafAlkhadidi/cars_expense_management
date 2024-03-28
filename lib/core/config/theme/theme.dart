@@ -10,6 +10,7 @@ class AppBrand {
 
   // static const backgroundColor = Color(0xfffafafb);
   static const backgroundColor = Colors.white;
+  static const backgroundHome = Color(0xffe8eaef);
   static const backgroundDrawer = Color(0xffFFFFFF);
   static const red = Color(0xffeb5757);
 

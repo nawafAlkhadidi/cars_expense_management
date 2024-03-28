@@ -1,5 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 
 class ExpenseTypesScreen extends ConsumerWidget {
   const ExpenseTypesScreen({super.key});

@@ -37,8 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
-        backgroundColor: AppBrand.backgroundColor,
-        appBar: AppBar(title: const Text("الرئيسية")),
+        backgroundColor: AppBrand.backgroundHome,
+        appBar: AppBar(
+          title: const Text("الرئيسية"),
+          surfaceTintColor: AppBrand.backgroundHome,
+          backgroundColor: AppBrand.backgroundHome,
+        ),
         body: SafeArea(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
@@ -106,25 +110,11 @@ class CustomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.2),
-        boxShadow: [
-          BoxShadow(
-            // color: AppBrand.mainColor.withOpacity(0.3),
-            color: Colors.grey.shade100,
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(1, 1), // changes position of shadow
-          ),
-        ],
-        // backgroundBlendMode: BlendMode.dstATop,
-        //color: AppBrand.mainColor.withOpacity(0.1),
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-      ),
-      height: size.height * 0.25,
-      width: size.height * 0.25,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 00),
+      padding: const EdgeInsets.all(12),
+      decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
+      height: size.height * 0.18,
+      width: size.width * 0.16,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,13 +122,13 @@ class CustomBox extends StatelessWidget {
           Row(
             children: [
               const Expanded(child: SizedBox()),
-              Container(height: 45, width: 45, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
+              Container(height: 40, width: 40, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
             ],
           ),
           const Expanded(child: SizedBox()),
-          Text(title, style: const TextStyle(fontSize: 23, color: Colors.black)),
+          Text(title, style: const TextStyle(fontSize: 17, color: Colors.grey)),
           const Expanded(child: SizedBox()),
-          Center(child: Text(subtitle, style: const TextStyle(fontSize: 35, color: Colors.black)))
+          Text(subtitle, style: const TextStyle(fontSize: 20, color: Colors.black))
         ],
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:cars_expense_management/library.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
 export 'package:cars_expense_management/screens/bills/bills_view_model.dart';
 
 class BillsScreen extends ConsumerWidget {
@@ -37,7 +36,7 @@ class BillsScreen extends ConsumerWidget {
                     child: GFButton(
                       size: 50,
                       fullWidthButton: true,
-                      onPressed: () => viewModel.exportDialog(context: context),
+                      onPressed: () => viewModel.exportToExcelWorkbook(),
                       text: "تصدير",
                       textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
                       shape: GFButtonShape.standard,
@@ -78,9 +77,6 @@ class BillsScreen extends ConsumerWidget {
                     allowSorting: true,
                     allowFiltering: true,
                     isScrollbarAlwaysShown: true,
-                    // onCellTap: (details) => print(details.column.),
-                    // on
-                    // footerFrozenColumnsCount: 0,
                     defaultColumnWidth: 150,
                     columns: <GridColumn>[
                       GridColumn(
