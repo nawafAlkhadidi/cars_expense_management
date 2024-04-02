@@ -57,6 +57,7 @@ dependencies:
   syncfusion_flutter_datagrid_export: ^24.2.9
   syncfusion_flutter_pdf: ^24.2.9
   path_provider: ^2.1.2
+  fl_chart: ^0.67.0
 
 dev_dependencies:
   flutter_test:

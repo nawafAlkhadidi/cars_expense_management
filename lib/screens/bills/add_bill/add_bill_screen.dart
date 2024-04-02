@@ -214,11 +214,9 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                                 height: 80,
                                 fillColor: Colors.white,
                                 labelText: "",
-                                keyboardType: TextInputType.number,
+                                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                                 controller: viewModel.priceController,
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                ],
+                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
                                 isvalidator: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {

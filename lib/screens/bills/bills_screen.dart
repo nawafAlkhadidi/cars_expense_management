@@ -78,6 +78,7 @@ class BillsScreen extends ConsumerWidget {
                     allowFiltering: true,
                     isScrollbarAlwaysShown: true,
                     defaultColumnWidth: 150,
+                    onCellTap: (details) => (viewModel.nawaf(details)),
                     columns: <GridColumn>[
                       GridColumn(
                           columnName: 'id',

@@ -6,7 +6,6 @@ class BillsLayout extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(billsViewModelProvider);
-
     return Scaffold(backgroundColor: AppBrand.backgroundColor, body: viewModel.getScreen(viewModel.indexPage));
   }
 }

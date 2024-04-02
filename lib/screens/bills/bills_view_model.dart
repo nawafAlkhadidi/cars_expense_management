@@ -72,22 +72,6 @@ class BillsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-//   void exportToPdf() async {
-// //     final List<int> bytes = document.saveSync();
-// //     File('DataGrid.pdf').writeAsBytes(bytes);
-// //     await FileSaveHelper.saveAndLaunchFile(bytes, 'DataGrid.pdf');
-
-//     String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
-//     PdfDocument document = key.currentState!.exportToPdfDocument();
-
-//     // PdfDocument document = PdfDocument();
-//     // PdfStringFormat
-
-//     final List<int> bytes = document.saveSync();
-//     File('${"bills-$fileName"}.pdf').writeAsBytes(bytes, flush: true);
-//     await FileSaveHelper.saveAndLaunchFile(bytes, '${"bills-$fileName"}.pdf');
-//   }
-
   void exportToExcelWorkbook() async {
     try {
       String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
@@ -99,46 +83,6 @@ class BillsViewModel extends ChangeNotifier {
       log(e.toString());
     }
   }
-
-  // exportDialog({required BuildContext context}) {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return Dialog(
-  //           backgroundColor: Colors.white,
-  //           surfaceTintColor: Colors.white,
-  //           insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
-  //           child: Container(
-  //             padding: const EdgeInsets.all(20),
-  //             width: 350,
-  //             child: Row(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 Flexible(
-  //                     child: GFButton(
-  //                         size: 50,
-  //                         fullWidthButton: true,
-  //                         onPressed: () => exportToPdf(),
-  //                         text: "PDF",
-  //                         textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-  //                         shape: GFButtonShape.standard,
-  //                         color: AppBrand.drawerButtonColor)),
-  //                 const SizedBox(width: 20, height: 20),
-  //                 Flexible(
-  //                     child: GFButton(
-  //                         size: 50,
-  //                         fullWidthButton: true,
-  //                         onPressed: () => exportToExcelWorkbook(),
-  //                         text: "Excel",
-  //                         textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-  //                         shape: GFButtonShape.standard,
-  //                         color: AppBrand.drawerButtonColor)),
-  //               ],
-  //             ),
-  //           )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
-  //     },
-  //   );
-  // }
 
   dateRangePickerDialog({required BuildContext context}) {
     return showDialog(
@@ -267,7 +211,7 @@ class BillsViewModel extends ChangeNotifier {
   }
 
   _onSelectionChanged(DateRangePickerSelectionChangedArgs data, BuildContext context) {
-    dataController.text = DateFormat('yyyy/MM/dd').format((data.value));
+    dataController.text = DateFormat('yyyy-MM-dd').format((data.value));
     Navigator.pop(context);
   }
 
@@ -332,6 +276,15 @@ class BillsViewModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+//!
+  void nawaf(DataGridCellTapDetails details) {
+    DataGridRow dd = billDataSource.rows[details.rowColumnIndex.rowIndex];
+
+    dd.getCells().map<dynamic>((dataGridCell) {
+      return dataGridCell.value;
+    });
   }
 
   void deleteThebill({required DataGridRow row, required BuildContext context}) async {

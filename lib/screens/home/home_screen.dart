@@ -1,39 +1,14 @@
 import 'package:cars_expense_management/library.dart';
+import 'package:cars_expense_management/screens/home/home_view_model.dart';
+import 'package:fl_chart/fl_chart.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(homeViewModelProvider);
 
-class _HomeScreenState extends State<HomeScreen> {
-  // void cc() async {
-  //   await DatabaseHelper.instance.insert();
-  // }
-
-  Future<void> insert() async {
-    // Database db = await DatabaseService().database;
-    // // Database db = await DatabaseHelper.database;
-
-    // print("insert");
-    // CarModel newCar = CarModel();
-    // newCar.plateNumbers = 1234;
-    // newCar.paintLetters = "2";
-    // newCar.vin = 'VIN123';
-    // newCar.carModel = 1;
-    // newCar.typeOfCar = 'SUV';
-    // await db.insert('car', newCar.toMap()).then((value) => print(value.toString()));
-    // print(db.query('car').toString());
-
-    // List<Map<String, dynamic>> bills = await db.query('car');
-    // for (var bill in bills) {
-    //   print(bill);
-    // }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
@@ -44,49 +19,137 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: AppBrand.backgroundHome,
         ),
         body: SafeArea(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      insert();
-                    },
-                    child: CustomBox(
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        viewModel.getbill();
+                        //   insert();
+                      },
+                      child: CustomBox(
+                        size: size,
+                        icon: const Icon(Icons.macro_off_outlined),
+                        title: "عدد السيارات",
+                        subtitle: viewModel.summary.totalCars.toString(),
+                        color: Colors.blue.withOpacity(0.2),
+                      ),
+                    ),
+                    CustomBox(
+                      size: size,
+                      icon: const Icon(Icons.countertops),
+                      title: "عدد الفواتير",
+                      subtitle: viewModel.summary.totalBills.toString(),
+                      color: Colors.amber.withOpacity(0.2),
+                    ),
+                    CustomBox(
                       size: size,
                       icon: const Icon(Icons.macro_off_outlined),
-                      title: "عدد السيارات",
-                      subtitle: "76",
-                      color: Colors.blue.withOpacity(0.2),
+                      title: "عدد الاصناف",
+                      subtitle: viewModel.summary.totalExpenseTypes.toString(),
+                      color: Colors.greenAccent.withOpacity(0.2),
                     ),
-                  ),
-                  CustomBox(
-                    size: size,
-                    icon: const Icon(Icons.countertops),
-                    title: "عدد الفواتير",
-                    subtitle: "100",
-                    color: Colors.amber.withOpacity(0.2),
-                  ),
-                  CustomBox(
-                    size: size,
-                    icon: const Icon(Icons.macro_off_outlined),
-                    title: "عدد الاصناف",
-                    subtitle: "26",
-                    color: Colors.greenAccent.withOpacity(0.2),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.only(right: 20, top: 20, bottom: 10),
-                child: Text(
-                  "أخر الفواتير",
-                  style: TextStyle(fontSize: 25),
+                    CustomBox(
+                      size: size,
+                      icon: const Icon(Icons.countertops),
+                      title: "إجمالي الفواتير",
+                      subtitle: viewModel.summary.totalPrice.toString(),
+                      color: Colors.amber.withOpacity(0.2),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const Padding(
+                  padding: EdgeInsets.only(right: 20, top: 20, bottom: 10),
+                  child: Text("ملخص", style: TextStyle(fontSize: 25)),
+                ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text("إجمالي الفواتير السنوية", style: TextStyle(fontSize: 17)),
+                        ),
+                        Container(
+                          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+                          height: 300,
+                          width: size.width * .35,
+                          padding: const EdgeInsets.only(top: 30),
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return BarChart(
+                                BarChartData(
+                                  alignment: BarChartAlignment.spaceEvenly,
+                                  barTouchData: BarTouchData(enabled: true),
+                                  titlesData: FlTitlesData(
+                                    show: true,
+                                    bottomTitles:
+                                        AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups1)),
+                                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                  ),
+                                  gridData: FlGridData(
+                                      show: true,
+                                      getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                      getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                      drawHorizontalLine: true,
+                                      drawVerticalLine: true),
+                                  borderData: FlBorderData(show: false),
+                                  barGroups: viewModel.barGroups1,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        const Padding(padding: EdgeInsets.only(bottom: 10), child: Text("إجمالي الفواتير الاسبوعية", style: TextStyle(fontSize: 17))),
+                        Container(
+                          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+                          height: 300,
+                          width: size.width * .4,
+                          padding: const EdgeInsets.only(top: 30),
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              return BarChart(
+                                BarChartData(
+                                  alignment: BarChartAlignment.spaceEvenly,
+                                  barTouchData: BarTouchData(enabled: true),
+                                  titlesData: FlTitlesData(
+                                    show: true,
+                                    bottomTitles:
+                                        AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups2)),
+                                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                  ),
+                                  gridData: FlGridData(
+                                      show: true,
+                                      getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                      getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                      drawHorizontalLine: true,
+                                      drawVerticalLine: true),
+                                  borderData: FlBorderData(show: false),
+                                  barGroups: viewModel.barGroups2,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ));
   }
@@ -110,25 +173,26 @@ class CustomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 00),
-      padding: const EdgeInsets.all(12),
-      decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(8))),
-      height: size.height * 0.18,
-      width: size.width * 0.16,
-      child: Column(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
+      padding: const EdgeInsets.all(10),
+      decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+      height: 120,
+      width: 210,
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(child: SizedBox()),
-              Container(height: 40, width: 40, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
+              Text(title, style: const TextStyle(fontSize: 17, color: Colors.grey)),
+              Text(subtitle, style: const TextStyle(fontSize: 27, color: Colors.black))
             ],
           ),
           const Expanded(child: SizedBox()),
-          Text(title, style: const TextStyle(fontSize: 17, color: Colors.grey)),
-          const Expanded(child: SizedBox()),
-          Text(subtitle, style: const TextStyle(fontSize: 20, color: Colors.black))
+          Container(height: 40, width: 40, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
         ],
       ),
     );
