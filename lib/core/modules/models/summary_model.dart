@@ -10,7 +10,7 @@ class SummaryModel {
     totalCars = json['total_cars'];
     totalBills = json['total_bills'];
     totalExpenseTypes = json['total_expense_types'];
-    totalPrice = json['total_price'];
+    totalPrice = json['total_price'] ?? 0.0;
   }
 
   Map<String, dynamic> toJson() {

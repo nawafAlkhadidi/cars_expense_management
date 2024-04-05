@@ -6,14 +6,15 @@ void main() async {
 
   await windowManager.ensureInitialized();
   WindowManager.instance.setMinimizable(false);
-
   WindowOptions windowOptions = const WindowOptions(
     size: Size(1200, 650),
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
+    title: "إدارة مصاريف السيارات",
     titleBarStyle: TitleBarStyle.hidden,
   );
+
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();

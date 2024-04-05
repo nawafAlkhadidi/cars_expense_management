@@ -58,8 +58,6 @@ class BillDataSource extends DataGridSource {
         color: backgroundColor,
         cells: row.getCells().map<Widget>((dataGridCell) {
           return Container(
-            // color: Colors.white,
-            // alignment: dataGridCell.columnName == 'id' ? Alignment.center : Alignment.center,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(16.0),
             child: Text(

@@ -1,12 +1,7 @@
 import 'package:cars_expense_management/library.dart';
 
 class CarDataSource extends DataGridSource {
-  CarDataSource() {
-    // {required List<CarModel> newcars}
-    // cars = newcars;
-
-    // buildDataGridRows();
-  }
+  CarDataSource();
 
   @override
   Future<void> handleRefresh() async {
@@ -58,8 +53,6 @@ class CarDataSource extends DataGridSource {
         color: backgroundColor,
         cells: row.getCells().map<Widget>((dataGridCell) {
           return Container(
-            // color: Colors.white,
-            // alignment: dataGridCell.columnName == 'id' ? Alignment.center : Alignment.center,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(16.0),
             child: Text(

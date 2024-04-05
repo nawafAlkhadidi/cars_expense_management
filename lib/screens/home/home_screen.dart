@@ -21,131 +21,133 @@ class HomeScreen extends ConsumerWidget {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        viewModel.getbill();
-                        //   insert();
-                      },
-                      child: CustomBox(
-                        size: size,
-                        icon: const Icon(Icons.macro_off_outlined),
-                        title: "عدد السيارات",
-                        subtitle: viewModel.summary.totalCars.toString(),
-                        color: Colors.blue.withOpacity(0.2),
-                      ),
+                    CustomBox(
+                      size: size,
+                      icon: const Icon(Icons.car_rental_outlined),
+                      title: "عدد السيارات",
+                      subtitle: viewModel.summary.totalCars.toString(),
+                      color: Colors.blue.withOpacity(0.2),
                     ),
                     CustomBox(
                       size: size,
-                      icon: const Icon(Icons.countertops),
+                      icon: const Icon(Icons.document_scanner),
                       title: "عدد الفواتير",
                       subtitle: viewModel.summary.totalBills.toString(),
                       color: Colors.amber.withOpacity(0.2),
                     ),
                     CustomBox(
                       size: size,
-                      icon: const Icon(Icons.macro_off_outlined),
+                      icon: const Icon(Icons.merge_type),
                       title: "عدد الاصناف",
                       subtitle: viewModel.summary.totalExpenseTypes.toString(),
                       color: Colors.greenAccent.withOpacity(0.2),
                     ),
                     CustomBox(
                       size: size,
-                      icon: const Icon(Icons.countertops),
+                      icon: const Icon(Icons.price_change_outlined, color: Colors.grey),
                       title: "إجمالي الفواتير",
                       subtitle: viewModel.summary.totalPrice.toString(),
                       color: Colors.amber.withOpacity(0.2),
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 20, top: 20, bottom: 10),
-                  child: Text("ملخص", style: TextStyle(fontSize: 25)),
-                ),
+                const SizedBox(height: 70),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: Text("إجمالي الفواتير السنوية", style: TextStyle(fontSize: 17)),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
-                          height: 300,
-                          width: size.width * .35,
-                          padding: const EdgeInsets.only(top: 30),
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return BarChart(
-                                BarChartData(
-                                  alignment: BarChartAlignment.spaceEvenly,
-                                  barTouchData: BarTouchData(enabled: true),
-                                  titlesData: FlTitlesData(
-                                    show: true,
-                                    bottomTitles:
-                                        AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups1)),
-                                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                  ),
-                                  gridData: FlGridData(
-                                      show: true,
-                                      getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                      getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                      drawHorizontalLine: true,
-                                      drawVerticalLine: true),
-                                  borderData: FlBorderData(show: false),
-                                  barGroups: viewModel.barGroups1,
-                                ),
-                              );
-                            },
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
+                          border: Border.all(color: Colors.grey.shade300, width: 2)),
+                      height: 300,
+                      width: size.width * .37,
+                      padding: const EdgeInsets.only(top: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Text("إجمالي الفواتير السنوية", style: TextStyle(fontSize: 16)),
                           ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        const Padding(padding: EdgeInsets.only(bottom: 10), child: Text("إجمالي الفواتير الاسبوعية", style: TextStyle(fontSize: 17))),
-                        Container(
-                          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
-                          height: 300,
-                          width: size.width * .4,
-                          padding: const EdgeInsets.only(top: 30),
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: LayoutBuilder(
-                            builder: (context, constraints) {
-                              return BarChart(
-                                BarChartData(
-                                  alignment: BarChartAlignment.spaceEvenly,
-                                  barTouchData: BarTouchData(enabled: true),
-                                  titlesData: FlTitlesData(
-                                    show: true,
-                                    bottomTitles:
-                                        AxisTitles(sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups2)),
-                                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                  ),
-                                  gridData: FlGridData(
+                          Flexible(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return BarChart(
+                                  BarChartData(
+                                    alignment: BarChartAlignment.spaceEvenly,
+                                    barTouchData: BarTouchData(enabled: true),
+                                    titlesData: FlTitlesData(
                                       show: true,
-                                      getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                      getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                      drawHorizontalLine: true,
-                                      drawVerticalLine: true),
-                                  borderData: FlBorderData(show: false),
-                                  barGroups: viewModel.barGroups2,
-                                ),
-                              );
-                            },
+                                      bottomTitles: AxisTitles(
+                                          sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups1)),
+                                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false, reservedSize: 40)),
+                                    ),
+                                    gridData: FlGridData(
+                                        show: true,
+                                        getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        drawHorizontalLine: true,
+                                        drawVerticalLine: true),
+                                    borderData: FlBorderData(show: false),
+                                    barGroups: viewModel.barGroups1,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ).animate().scale(),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.all(Radius.circular(5)),
+                        border: Border.all(color: Colors.grey.shade300, width: 2),
+                      ),
+                      height: 300,
+                      width: size.width * .37,
+                      padding: const EdgeInsets.only(top: 15),
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      child: Column(
+                        children: [
+                          const Padding(padding: EdgeInsets.only(bottom: 5), child: Text("إجمالي الفواتير الاسبوعية", style: TextStyle(fontSize: 16))),
+                          Flexible(
+                            child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                return BarChart(
+                                  BarChartData(
+                                    alignment: BarChartAlignment.spaceEvenly,
+                                    barTouchData: BarTouchData(enabled: true),
+                                    titlesData: FlTitlesData(
+                                      show: true,
+                                      bottomTitles: AxisTitles(
+                                          sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups2)),
+                                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                    ),
+                                    gridData: FlGridData(
+                                        show: true,
+                                        getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        drawHorizontalLine: true,
+                                        drawVerticalLine: true),
+                                    borderData: FlBorderData(show: false),
+                                    barGroups: viewModel.barGroups2,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).animate().scale(),
                   ],
                 ),
               ],
@@ -175,7 +177,8 @@ class CustomBox extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
       padding: const EdgeInsets.all(10),
-      decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(5))),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: const BorderRadius.all(Radius.circular(5)), border: Border.all(color: Colors.grey.shade300, width: 1.5)),
       height: 120,
       width: 210,
       child: Row(
@@ -195,6 +198,6 @@ class CustomBox extends StatelessWidget {
           Container(height: 40, width: 40, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
         ],
       ),
-    );
+    ).animate().flip();
   }
 }

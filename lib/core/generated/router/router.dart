@@ -1,4 +1,5 @@
 import 'package:cars_expense_management/library.dart';
+import 'package:cars_expense_management/screens/bills/details_bill/details_bill_screen.dart';
 import 'package:cars_expense_management/screens/expense_types/add_expense_type/add_expense_type_screen.dart';
 
 // GoRouter configuration
@@ -20,6 +21,13 @@ final router = GoRouter(
       path: '/AddTypeExScreen',
       builder: (context, state) => const AddExpenseTypeScreen(),
     ),
+    GoRoute(
+        name: 'detailsBill',
+        path: '/detailsBill',
+        builder: (context, state) {
+          BillModels bill = state.extra as BillModels;
+          return DetailsBillScreen(billData: bill);
+        }),
     // GoRoute(
     //   name: 'AddBillScreen',
     //   path: '/AddBillScreen',

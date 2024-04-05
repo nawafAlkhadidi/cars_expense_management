@@ -1,55 +1,42 @@
 import 'package:cars_expense_management/library.dart';
 
-class AddBillScreen extends ConsumerStatefulWidget {
-  const AddBillScreen({super.key});
+class DetailsBillScreen extends ConsumerWidget {
+  final BillModels billData;
+  const DetailsBillScreen({super.key, required this.billData});
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _AddBillScreenState();
-}
-
-class _AddBillScreenState extends ConsumerState<AddBillScreen> {
-  @override
-  void initState() {
-    ref.read(billsViewModelProvider).initController();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(billsViewModelProvider);
+
     Size size = MediaQuery.sizeOf(context);
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30),
-            child: Row(
-              children: [
-                SizedBox(child: Text("فاتورة جديدة", style: Theme.of(context).appBarTheme.titleTextStyle)),
-                const Expanded(child: SizedBox()),
-                GFButton(
-                    size: 45,
-                    fullWidthButton: false,
-                    onPressed: () => viewModel.addbill(context: context),
-                    text: "حفظ",
-                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                    shape: GFButtonShape.standard,
-                    color: AppBrand.mainColor),
-                const SizedBox(width: 30),
-                GFButton(
-                    size: 45,
-                    fullWidthButton: false,
-                    onPressed: () => viewModel.setIndex(0),
-                    text: "إلغاء",
-                    textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
-                    shape: GFButtonShape.standard,
-                    color: GFColors.DANGER),
-              ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Row(
+                children: [
+                  SizedBox(child: Text("تفاصيل الفاتورة #${billData.id}", style: Theme.of(context).appBarTheme.titleTextStyle)),
+                  const Expanded(child: SizedBox()),
+                  GFButton(
+                      size: 45,
+                      fullWidthButton: false,
+                      onPressed: () {
+                        viewModel.removeModel();
+                        viewModel.setIndex(0);
+                      },
+                      text: "  رجوع  ",
+                      textStyle: const TextStyle(fontSize: 16, fontFamily: "Tajawal"),
+                      shape: GFButtonShape.standard,
+                      color: GFColors.DANGER),
+                ],
+              ),
             ),
-          ),
-          Form(
-            key: viewModel.globalKey,
-            child: Container(
+            // const SizedBox(height: 50),
+            Container(
               width: size.width * 0.9,
               padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 30),
               decoration: BoxDecoration(color: Colors.grey.shade200, borderRadius: const BorderRadius.all(Radius.circular(10))),
@@ -67,26 +54,15 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                         SizedBox(width: size.width * 0.012),
                         SizedBox(
                           width: size.width * 0.2,
+                          height: 75,
                           child: myTextFiled(
                             height: 75,
                             fillColor: Colors.white,
                             labelText: "",
                             readOnly: true,
-                            onTap: () => viewModel.dateRangePickerDialog(context: context),
-                            controller: viewModel.dataController,
-                            suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
+                            initialValue: billData.createdAt,
+                            keyboardType: TextInputType.none,
                             isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال تاريخ الفاتورة";
-                              }
-
-                              return null;
-                            },
                           ),
                         ),
                         const Expanded(child: SizedBox()),
@@ -96,23 +72,14 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                           width: size.width * 0.35,
                           child: myTextFiled(
                             height: 80,
-                            onTap: () => viewModel.carsPickerDialog(context: context),
-                            controller: viewModel.carNameController,
+                            readOnly: true,
+                            initialValue: "${billData.typeOfCar!} | ${billData.plateNumbers!} | ${billData.plateLetters}",
                             fillColor: Colors.white,
                             labelText: "",
-                            suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
                             keyboardType: TextInputType.number,
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.digitsOnly,
                             ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء اختيار السيارة";
-                              }
-
-                              return null;
-                            },
                           ),
                         ),
                       ],
@@ -136,11 +103,7 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             readOnly: true,
                             labelText: "",
                             keyboardType: TextInputType.number,
-                            controller: viewModel.lastOdometerController,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
+                            initialValue: billData.lastOdometer.toString(),
                           ),
                         ),
                         const Expanded(child: SizedBox()),
@@ -154,23 +117,10 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                           child: myTextFiled(
                             height: 80,
                             fillColor: Colors.white,
-                            onChanged: viewModel.calculateODM,
                             labelText: "",
-                            keyboardType: TextInputType.number,
-                            controller: viewModel.newOdometerController,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال مسافة العداد الحالية";
-                              }
-                              if (int.parse(value) <= int.parse(viewModel.lastOdometerController.value.text)) {
-                                return "الرجاء إدخال مسافة عداد صحيح";
-                              }
-                              return null;
-                            },
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.newOdometer.toString(),
                           ),
                         ),
                         const Expanded(child: SizedBox()),
@@ -186,12 +136,8 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             readOnly: true,
                             fillColor: Colors.white54,
                             labelText: "",
-                            keyboardType: TextInputType.number,
-                            controller: viewModel.distanceController,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            isvalidator: false,
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.distance.toString(),
                           ),
                         ),
                       ],
@@ -213,17 +159,9 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             height: 80,
                             fillColor: Colors.white,
                             labelText: "",
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            controller: viewModel.priceController,
-                            inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}'))],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال قيمة الفاتورة";
-                              }
-
-                              return null;
-                            },
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.price.toString(),
                           ),
                         ),
                         const Expanded(child: SizedBox()),
@@ -238,19 +176,9 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             height: 80,
                             fillColor: Colors.white,
                             labelText: "",
-                            keyboardType: TextInputType.text,
-                            controller: viewModel.nameController,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.singleLineFormatter,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال الأسم";
-                              }
-
-                              return null;
-                            },
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.personName,
+                            readOnly: true,
                           ),
                         ),
                         const Expanded(child: SizedBox()),
@@ -266,21 +194,8 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             fillColor: Colors.white,
                             labelText: "",
                             readOnly: true,
-                            onTap: () => viewModel.expensePickerDialog(context: context),
-                            keyboardType: TextInputType.text,
-                            controller: viewModel.expenseController,
-                            suffixIcon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.singleLineFormatter,
-                            ],
-                            isvalidator: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "الرجاء إدخال نوع المصروف";
-                              }
-
-                              return null;
-                            },
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.expenseName,
                           ),
                         ),
                       ],
@@ -303,12 +218,9 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                             maxLines: 6,
                             fillColor: Colors.white,
                             labelText: "",
-                            keyboardType: TextInputType.multiline,
-                            controller: viewModel.detailsController,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.singleLineFormatter,
-                            ],
-                            isvalidator: false,
+                            readOnly: true,
+                            keyboardType: TextInputType.none,
+                            initialValue: billData.details,
                           ),
                         ),
                       ],
@@ -317,11 +229,11 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                 ),
               ),
             ),
-          ),
-          // const SizedBox(height: 50),
+            // const SizedBox(height: 50),
 
-          // const SizedBox(height: 50),
-        ],
+            // const SizedBox(height: 50),
+          ],
+        ),
       ),
     );
   }

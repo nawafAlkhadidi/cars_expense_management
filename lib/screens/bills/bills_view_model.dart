@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/bills/data_source/bills_data_source.dart';
+import 'package:cars_expense_management/screens/bills/details_bill/details_bill_screen.dart';
 import 'package:cars_expense_management/widgets/date_range_picker.dart';
 
 final billsViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<BillsViewModel>());
@@ -43,6 +44,8 @@ class BillsViewModel extends ChangeNotifier {
     switch (index) {
       case 1:
         return const AddBillScreen();
+      case 2:
+        return DetailsBillScreen(billData: bill);
       default:
         return const BillsScreen();
     }
@@ -279,12 +282,18 @@ class BillsViewModel extends ChangeNotifier {
   }
 
 //!
-  void nawaf(DataGridCellTapDetails details) {
-    DataGridRow dd = billDataSource.rows[details.rowColumnIndex.rowIndex];
+  void goToBillDetails(DataGridCellTapDetails details, BuildContext context) {
+    DataGridRow dd = billDataSource.dataGridRows[details.rowColumnIndex.rowIndex - 1];
+    BillModels newBill = billsList.firstWhere((element) => element.id == dd.getCells()[0].value);
+    bill = newBill;
+    setIndex(2);
+    // context.goNamed('/DetailsBillScreen', extra: bill);
+    // context.go('/DetailsBillScreen/:${bill}');
+    // print(dd.getCells()[0].value);
+  }
 
-    dd.getCells().map<dynamic>((dataGridCell) {
-      return dataGridCell.value;
-    });
+  void removeModel() {
+    bill = BillModels();
   }
 
   void deleteThebill({required DataGridRow row, required BuildContext context}) async {

@@ -57,5 +57,56 @@ class DatabaseService {
       version: 1,
     );
   }
+
+  Future dropAllTables() async {
+    Database db = await database;
+    await db.execute('''
+      DROP TABLE IF EXISTS cars
+    ''');
+    await db.execute('''
+      DROP TABLE IF EXISTS bills
+    ''');
+    await db.execute('''
+      DROP TABLE IF EXISTS types_of_expense
+    ''');
+    await db.execute('''
+      CREATE TABLE cars (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        plateNumbers INTEGER,
+        plateLetters TEXT,
+        vin TEXT,
+        carModel INTEGER,
+        lastOdometer INTEGER,
+        typeOfCar TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE types_of_expense (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        expenseName TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    ''');
+    await db.execute('''
+      CREATE TABLE bills (
+        bill_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        car_id INTEGER,
+        expense_id INTEGER,
+        price double,
+        details TEXT,
+        person_name TEXT,
+        new_odometer INTEGER,
+        previous_odometer INTEGER,
+        distance INTEGER,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (car_id) REFERENCES cars (id),
+        FOREIGN KEY (expense_id) REFERENCES types_of_expense (id)
+      )
+    ''');
+  }
 }
 // details  person_name

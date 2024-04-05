@@ -92,7 +92,7 @@ BEGIN
             VALUE "CompanyName", "com.car.em" "\0"
             VALUE "FileDescription", "car_expense_management" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "car_expense_management" "\0"
+            VALUE "InternalName", "com.cars.expense.management" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.car.em. All rights reserved." "\0"
             VALUE "OriginalFilename", "car_expense_management.exe" "\0"
             VALUE "ProductName", "car_expense_management" "\0"

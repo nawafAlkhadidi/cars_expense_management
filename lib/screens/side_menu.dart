@@ -19,7 +19,8 @@ class SideMenu extends StatelessWidget {
         children: [
           Column(
             children: [
-              SizedBox(height: 100, child: SvgPicture.asset("assets/icons/car.svg", height: 100)),
+              const SizedBox(height: 20),
+              SizedBox(height: 100, child: SvgPicture.asset("assets/icons/logo.svg", height: 100)),
               DrawerListTile(title: "الرئيسية", svgSrc: "assets/icons/home.svg", press: () => tab(0), isColor: 0 == indexPage),
               DrawerListTile(title: "الفواتير", svgSrc: "assets/icons/bill.svg", press: () => tab(1), isColor: 1 == indexPage),
               DrawerListTile(title: "السيارات", svgSrc: "assets/icons/add.svg", press: () => tab(2), isColor: 2 == indexPage),
@@ -66,9 +67,7 @@ class DrawerListTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         width: 300,
-        decoration: const BoxDecoration(
-            //    color: isColor ? AppBrand.drawerButtonColor : Colors.transparent,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+        decoration: BoxDecoration(color: isColor ? AppBrand.mainColor : Colors.transparent, borderRadius: const BorderRadius.all(Radius.circular(10))),
         child: ListTile(
           onTap: press,
           horizontalTitleGap: 0.0,

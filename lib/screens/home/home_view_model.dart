@@ -146,7 +146,7 @@ class HomeViewModel extends ChangeNotifier {
         BarChartRodData(
           fromY: 0,
           toY: bill.totalPrice!,
-          width: 20,
+          width: 15,
           color: AppBrand.drawerButtonColor,
         )
       ]));
@@ -159,7 +159,7 @@ class HomeViewModel extends ChangeNotifier {
     List<WeeklySummaryModel> list = await billsRepositories.getTotalbillsWeekly();
     for (var bill in list) {
       barGroups2.add(BarChartGroupData(
-          x: numberOFday(bill.day!), barRods: [BarChartRodData(fromY: 0, toY: bill.totalPriceBills!, width: 20, color: AppBrand.drawerButtonColor)]));
+          x: numberOFday(bill.day!), barRods: [BarChartRodData(fromY: 0, toY: bill.totalPriceBills!, width: 15, color: AppBrand.drawerButtonColor)]));
       //  print(bills[2].totalPrice);
     }
     notifyListeners();

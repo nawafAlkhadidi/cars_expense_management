@@ -7,6 +7,11 @@ class CarsLayout extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(carViewModelProvider);
 
-    return Scaffold(backgroundColor: AppBrand.backgroundColor, body: viewModel.getScreen(viewModel.indexPage));
+    return Scaffold(
+        backgroundColor: AppBrand.backgroundColor,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: viewModel.getScreen(viewModel.indexPage),
+        ));
   }
 }

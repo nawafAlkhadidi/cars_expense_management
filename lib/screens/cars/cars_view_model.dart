@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:io';
+
 import 'package:cars_expense_management/library.dart';
 import 'package:collection/collection.dart';
 
@@ -16,7 +17,7 @@ class CarViewModel extends ChangeNotifier {
 
   List<CarModel> cars = [];
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
-  final GlobalKey<SfDataGridState> key = GlobalKey<SfDataGridState>();
+  final GlobalKey<SfDataGridState> key1 = GlobalKey<SfDataGridState>();
   CarModel newCar = CarModel();
   int indexPage = 0;
 
@@ -53,15 +54,15 @@ class CarViewModel extends ChangeNotifier {
   }
 
   void exportToExcelWorkbook() async {
-//    try {
+    //try {
     String fileName = DateFormat('yyyy-MM-dd').format((DateTime.now()));
-    final Workbook workbook = key.currentState!.exportToExcelWorkbook();
+    final Workbook workbook = key1.currentState!.exportToExcelWorkbook();
     final List<int> bytes = workbook.saveAsStream();
     File('${"cars-$fileName"}.xlsx').writeAsBytes(bytes, flush: true);
     await FileSaveHelper.saveAndLaunchFile(bytes, '${"cars-$fileName"}.xlsx');
     // } catch (e) {
     // log(e.toString());
-//}
+    // }
   }
 
   void setDataTable() {
