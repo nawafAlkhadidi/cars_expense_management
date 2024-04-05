@@ -6,7 +6,6 @@ class ExpenseTypesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(expenseTypesViewModelProvider);
-    // Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       backgroundColor: AppBrand.backgroundColor,

@@ -63,7 +63,6 @@ class BillsScreen extends ConsumerWidget {
               child: SfDataGrid(
                 key: viewModel.key,
                 source: viewModel.billDataSource,
-                columnWidthMode: ColumnWidthMode.fill,
                 endSwipeActionsBuilder: viewModel.buildEndSwipeWidget,
                 allowSwiping: true,
                 showHorizontalScrollbar: true,
