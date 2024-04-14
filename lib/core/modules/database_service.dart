@@ -24,6 +24,8 @@ class DatabaseService {
             carModel INTEGER,
             lastOdometer INTEGER,
             typeOfCar TEXT
+            license_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            inspection_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
@@ -78,6 +80,8 @@ class DatabaseService {
         carModel INTEGER,
         lastOdometer INTEGER,
         typeOfCar TEXT,
+        license_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        inspection_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )

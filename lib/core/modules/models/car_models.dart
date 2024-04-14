@@ -6,16 +6,19 @@ class CarModel {
   int? carModel;
   int? lastOdometer;
   String? typeOfCar;
+  String? licenseExpiration;
+  String? inspectionExpiration;
 
-  CarModel({
-    this.id,
-    this.plateNumbers,
-    this.plateLetters,
-    this.vin,
-    this.carModel,
-    this.typeOfCar,
-    this.lastOdometer,
-  });
+  CarModel(
+      {this.id,
+      this.plateNumbers,
+      this.plateLetters,
+      this.vin,
+      this.carModel,
+      this.typeOfCar,
+      this.lastOdometer,
+      this.licenseExpiration,
+      this.inspectionExpiration});
 
   CarModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -25,6 +28,8 @@ class CarModel {
     carModel = json['carModel'];
     typeOfCar = json['typeOfCar'];
     lastOdometer = json['lastOdometer'];
+    licenseExpiration = json['license_expiration'];
+    inspectionExpiration = json['inspection_expiration'];
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +41,9 @@ class CarModel {
     data['carModel'] = carModel;
     data['typeOfCar'] = typeOfCar;
     data['lastOdometer'] = lastOdometer;
+    data['license_expiration'] = licenseExpiration;
+    data['inspection_expiration'] = inspectionExpiration;
+
     return data;
   }
 
@@ -48,6 +56,8 @@ class CarModel {
       'carModel': carModel,
       'typeOfCar': typeOfCar,
       'lastOdometer': lastOdometer,
+      'license_expiration': licenseExpiration,
+      'inspection_expiration': inspectionExpiration,
     };
   }
 }

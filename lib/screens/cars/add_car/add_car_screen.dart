@@ -1,4 +1,5 @@
 import 'package:cars_expense_management/library.dart';
+import 'package:pinput/pinput.dart';
 
 class AddCarScreen extends ConsumerStatefulWidget {
   const AddCarScreen({super.key});
@@ -62,26 +63,38 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
               children: [
                 SizedBox(height: 50, child: Center(child: Text("رقم اللوحة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
-                SizedBox(
+                Container(
                   width: size.width * 0.5,
-                  child: myTextFiled(
-                    controller: viewModel.plateNumbersController,
-                    labelText: "",
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly,
-                    ],
-                    isvalidator: false,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "الرجاء إدخال ارقام لوحة السيارة";
-                      }
-                      if (value.length > 5) {
-                        return "عدد ارقام اللوحة 4 خانات";
-                      }
-                      return null;
-                    },
-                  ),
+                  height: 77,
+                  alignment: Alignment.centerRight,
+                  child: Pinput(
+                      controller: viewModel.plateNumbersController,
+                      length: 4,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                      pinAnimationType: PinAnimationType.scale,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "الرجاء إدخال ارقام لوحة السيارة";
+                        }
+                        if (value.length > 5) {
+                          return "عدد ارقام اللوحة 4 خانات";
+                        }
+                        return null;
+                      },
+                      //!  separator: const SizedBox(width: 10),
+                      defaultPinTheme: PinTheme(
+                        width: 50,
+                        height: 50,
+                        textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(238, 238, 238, 1),
+                          border: Border.all(
+                            color: AppBrand.mainColor,
+                            width: .4,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      )),
                 ),
               ],
             ),
@@ -92,11 +105,17 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
               children: [
                 SizedBox(height: 50, child: Center(child: Text("حروف اللوحة : ", style: Theme.of(context).textTheme.labelMedium))),
                 const Expanded(child: SizedBox()),
-                SizedBox(
+                Container(
                   width: size.width * 0.5,
-                  child: myTextFiled(
+                  height: 77,
+                  alignment: Alignment.centerRight,
+                  child: Pinput(
                       controller: viewModel.plateLettersController,
-                      isvalidator: false,
+                      length: 4,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.deny(RegExp(r'\d')),
+                      ],
+                      pinAnimationType: PinAnimationType.scale,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "الرجاء إدخال حروف لوحة السيارة";
@@ -106,11 +125,19 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                         }
                         return null;
                       },
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.deny(RegExp(r'\d')),
-                      ],
-                      labelText: "",
-                      keyboardType: TextInputType.text),
+                      defaultPinTheme: PinTheme(
+                        width: 50,
+                        height: 50,
+                        textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(238, 238, 238, 1),
+                          border: Border.all(
+                            color: AppBrand.mainColor,
+                            width: .4,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      )),
                 ),
               ],
             ),
@@ -207,6 +234,50 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                         keyboardType: TextInputType.text)),
               ],
             ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 50, child: Center(child: Text("تاريخ انتهاء الفحص : ", style: Theme.of(context).textTheme.labelMedium))),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                    width: size.width * 0.5,
+                    child: myTextFiled(
+                        controller: viewModel.typeOfCarController,
+                        isvalidator: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "الرجاء إدخال نوع السيارة";
+                          }
+
+                          return null;
+                        },
+                        labelText: "",
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.deny(RegExp(r'\d'))],
+                        keyboardType: TextInputType.text)),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 50, child: Center(child: Text("تاريخ انتهاء الاستماره  : ", style: Theme.of(context).textTheme.labelMedium))),
+                const Expanded(child: SizedBox()),
+                SizedBox(
+                    width: size.width * 0.5,
+                    child: myTextFiled(
+                        controller: viewModel.typeOfCarController,
+                        isvalidator: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "الرجاء إدخال نوع السيارة";
+                          }
+
+                          return null;
+                        },
+                        labelText: "",
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.deny(RegExp(r'\d'))],
+                        keyboardType: TextInputType.text)),
+              ],
+            ),
             // SizedBox(height: size.height * 0.1),
           ],
         ),
@@ -214,18 +285,3 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
     );
   }
 }
-
-// class AddCarScreen extends ConsumerStatefulWidget {
-//   const AddCarScreen({super.key});
-//  @override
-//   ConsumerState<ConsumerStatefulWidget> createState() {
-//     // TODO: implement createState
-//     throw UnimplementedError();
-//   }
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-
-//   }
-  
- 
-// }

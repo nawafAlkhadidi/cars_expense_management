@@ -37,7 +37,7 @@ class HomeViewModel extends ChangeNotifier {
         text = 'Jul';
         break;
       case 04:
-        text = 'Aug';
+        text = 'Apr';
         break;
       case 05:
         text = 'May';

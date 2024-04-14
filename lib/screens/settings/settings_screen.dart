@@ -17,6 +17,7 @@ class SettingsScrren extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            CustomButton(fun: () => viewModel.getDatabasesFile(), text: "تغير كلمة المرور"),
             CustomButton(fun: () => viewModel.getDatabasesFile(), text: "إستخراج قاعدة البيانات"),
             CustomButton(fun: () => viewModel.handleDeleteWidget(context: context), color: GFColors.DANGER, text: "اعادة ضبط قاعدة البيانات"),
           ],
