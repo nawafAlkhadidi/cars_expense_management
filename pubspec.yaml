@@ -61,6 +61,7 @@ dependencies:
   url_launcher: ^6.2.5
   flutter_launcher_icons: ^0.13.1
   pinput: ^4.0.0
+  
 
 
 flutter_launcher_icons:
@@ -72,6 +73,7 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/images/logo.png"
 dev_dependencies:
+  sqflite_common_ffi: ^2.3.3
   flutter_test:
     sdk: flutter
 

@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:cars_expense_management/library.dart';
+import 'package:cars_expense_management/widgets/date_range_picker.dart';
 import 'package:collection/collection.dart';
 
 final carViewModelProvider = ChangeNotifierProvider.autoDispose((ref) => locator<CarViewModel>());
@@ -27,7 +28,9 @@ class CarViewModel extends ChangeNotifier {
       typeOfCarController,
       vinController,
       lastOdometerController,
-      carModelController;
+      carModelController,
+      licenseEXController,
+      inspectionEXController;
 
   void setIndexPage(int newIndex) {
     indexPage = newIndex;
@@ -42,6 +45,8 @@ class CarViewModel extends ChangeNotifier {
     lastOdometerController = TextEditingController();
     plateLettersController = TextEditingController();
     carModelController = TextEditingController();
+    licenseEXController = TextEditingController();
+    inspectionEXController = TextEditingController();
   }
 
   Widget getScreen(int index) {
@@ -123,6 +128,31 @@ class CarViewModel extends ChangeNotifier {
     );
   }
 
+  dateRangePickerDialog({required BuildContext context, required TextEditingController controller}) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            insetPadding: const EdgeInsets.only(bottom: 10, top: 20, right: 0, left: 0),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              height: 450,
+              width: 450,
+              child: CustomDateRangePicker(onSelectionChanged: (DateRangePickerSelectionChangedArgs data1, BuildContext context1) {
+                _onSelectionChanged(context: context1, data: data1, controller: controller);
+              }),
+            )).animate().moveY(begin: 500, delay: const Duration(milliseconds: 10));
+      },
+    );
+  }
+
+  _onSelectionChanged({required DateRangePickerSelectionChangedArgs data, required BuildContext context, required TextEditingController controller}) {
+    controller.text = DateFormat('yyyy-MM-dd').format((data.value));
+    Navigator.pop(context);
+  }
+
   void addcar({required BuildContext context}) async {
     if (globalKey.currentState!.validate()) {
       newCar.plateNumbers = int.tryParse(plateNumbersController.value.text);
@@ -131,6 +161,9 @@ class CarViewModel extends ChangeNotifier {
       newCar.carModel = int.tryParse(carModelController.value.text);
       newCar.typeOfCar = typeOfCarController.value.text;
       newCar.lastOdometer = int.tryParse(lastOdometerController.value.text);
+      newCar.inspectionExpiration = inspectionEXController.value.text;
+      newCar.licenseExpiration = licenseEXController.value.text;
+
       bool status = await carRepositories.addcar(newCar);
       if (status) {
         getCars();
@@ -176,6 +209,11 @@ class CarViewModel extends ChangeNotifier {
     carModelController.text = carModel ?? '';
     final String? lastOdometer = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'lastOdometer')?.value.toString();
     lastOdometerController.text = lastOdometer ?? '';
+    final String? inspectionExpiration =
+        row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'inspectionExpiration')?.value.toString();
+    inspectionEXController.text = inspectionExpiration ?? '';
+    final String? licenseExpiration = row.getCells().firstWhereOrNull((DataGridCell element) => element.columnName == 'licenseExpiration')?.value.toString();
+    licenseEXController.text = licenseExpiration ?? '';
   }
 
   void _processCellUpdate(DataGridRow row, BuildContext buildContext) async {
@@ -187,6 +225,8 @@ class CarViewModel extends ChangeNotifier {
       newCar.carModel = int.tryParse(carModelController.value.text);
       newCar.typeOfCar = typeOfCarController.value.text;
       newCar.lastOdometer = int.tryParse(lastOdometerController.value.text);
+      newCar.inspectionExpiration = inspectionEXController.value.text;
+      newCar.licenseExpiration = licenseEXController.value.text;
 
       bool status = await carRepositories.upadteTheCar(newCar.id!, newCar);
       if (status) {
@@ -199,6 +239,8 @@ class CarViewModel extends ChangeNotifier {
           DataGridCell<int>(columnName: 'carModel', value: newCar.carModel),
           DataGridCell<String>(columnName: 'typeOfCar', value: newCar.typeOfCar),
           DataGridCell<int>(columnName: 'lastOdometer', value: newCar.lastOdometer),
+          DataGridCell<String>(columnName: 'inspectionExpiration', value: newCar.inspectionExpiration),
+          DataGridCell<String>(columnName: 'licenseExpiration', value: newCar.licenseExpiration),
         ]);
         // carDataSource.buildDataGridRows();
         carDataSource.updateDataSource();
@@ -258,7 +300,11 @@ class CarViewModel extends ChangeNotifier {
             controller: vinController, columnName: 'رقم الهيكل', filteringTextInput: FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]')), length: 40),
         _buildRow(controller: typeOfCarController, columnName: 'نوع السيارة', filteringTextInput: FilteringTextInputFormatter.deny(RegExp(r'\d')), length: 10),
         _buildRow(controller: carModelController, columnName: 'موديل السيارة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 4),
-        _buildRow(controller: lastOdometerController, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40)
+        _buildRow(controller: lastOdometerController, columnName: 'عداد المسافة', filteringTextInput: FilteringTextInputFormatter.digitsOnly, length: 40),
+        _buildRow(
+            controller: inspectionEXController, columnName: 'تاريخ الفحص', filteringTextInput: FilteringTextInputFormatter.singleLineFormatter, length: 40),
+        _buildRow(
+            controller: licenseEXController, columnName: 'تاريخ الاستماره', filteringTextInput: FilteringTextInputFormatter.singleLineFormatter, length: 40),
       ],
     );
   }

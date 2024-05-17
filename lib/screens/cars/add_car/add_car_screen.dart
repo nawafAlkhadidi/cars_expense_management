@@ -65,11 +65,12 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                 const Expanded(child: SizedBox()),
                 Container(
                   width: size.width * 0.5,
-                  height: 77,
+                  height: 85,
                   alignment: Alignment.centerRight,
                   child: Pinput(
                       controller: viewModel.plateNumbersController,
                       length: 4,
+                      errorTextStyle: TextStyle(fontSize: 14, color: Colors.red[900]),
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       pinAnimationType: PinAnimationType.scale,
                       validator: (value) {
@@ -107,14 +108,15 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                 const Expanded(child: SizedBox()),
                 Container(
                   width: size.width * 0.5,
-                  height: 77,
+                  height: 85,
                   alignment: Alignment.centerRight,
                   child: Pinput(
                       controller: viewModel.plateLettersController,
-                      length: 4,
+                      length: 3,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.deny(RegExp(r'\d')),
                       ],
+                      errorTextStyle: TextStyle(fontSize: 14, color: Colors.red[900]),
                       pinAnimationType: PinAnimationType.scale,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -131,10 +133,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                         textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(238, 238, 238, 1),
-                          border: Border.all(
-                            color: AppBrand.mainColor,
-                            width: .4,
-                          ),
+                          border: Border.all(color: AppBrand.mainColor, width: .4),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       )),
@@ -242,11 +241,14 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                 SizedBox(
                     width: size.width * 0.5,
                     child: myTextFiled(
-                        controller: viewModel.typeOfCarController,
+                        readOnly: true,
+                        controller: viewModel.inspectionEXController,
+                        onTap: () => viewModel.dateRangePickerDialog(context: context, controller: viewModel.inspectionEXController),
                         isvalidator: false,
+                        suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "الرجاء إدخال نوع السيارة";
+                            return "الرجاء إدخال تاريخ انتهاء الفحص";
                           }
 
                           return null;
@@ -264,11 +266,14 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                 SizedBox(
                     width: size.width * 0.5,
                     child: myTextFiled(
-                        controller: viewModel.typeOfCarController,
+                        readOnly: true,
+                        onTap: () => viewModel.dateRangePickerDialog(context: context, controller: viewModel.licenseEXController),
+                        controller: viewModel.licenseEXController,
                         isvalidator: false,
+                        suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "الرجاء إدخال نوع السيارة";
+                            return "الرجاء إدخال تاريخ انتهاء الاستماره ";
                           }
 
                           return null;

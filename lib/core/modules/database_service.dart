@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 class DatabaseService {
   Database? _database;
@@ -11,6 +12,9 @@ class DatabaseService {
   }
 
   Future<Database> _initDatabase() async {
+    sqfliteFfiInit(); // Initialize the sqflite_common_ffi plugin
+    databaseFactory = databaseFactoryFfi; // Set the databaseFactory to use ffi factory
+
     String path = await getDatabasesPath();
     return await openDatabase(
       join(path, 'your_database12_name.db'),
@@ -23,9 +27,9 @@ class DatabaseService {
             vin TEXT,
             carModel INTEGER,
             lastOdometer INTEGER,
-            typeOfCar TEXT
-            license_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            inspection_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            typeOfCar TEXT ,
+            license_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            inspection_expiration TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
@@ -33,7 +37,7 @@ class DatabaseService {
         await db.execute('''
           CREATE TABLE types_of_expense (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            expenseName TEXT
+            expenseName TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           )
@@ -113,4 +117,4 @@ class DatabaseService {
     ''');
   }
 }
-// details  person_name
+///

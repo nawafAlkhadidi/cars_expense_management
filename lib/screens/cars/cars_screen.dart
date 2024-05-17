@@ -116,6 +116,18 @@ class CarsScreen extends ConsumerWidget {
                       label: Container(
                           alignment: Alignment.center,
                           child: Text('عداد المسافة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                  GridColumn(
+                      columnName: 'inspectionExpiration',
+                      filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      label: Container(
+                          alignment: Alignment.center,
+                          child: Text('تاريخ الفحص', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
+                  GridColumn(
+                      columnName: 'licenseExpiration',
+                      filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                      label: Container(
+                          alignment: Alignment.center,
+                          child: Text('تاريخ الاستمارة', textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelMedium))),
                 ],
               ),
             ),
