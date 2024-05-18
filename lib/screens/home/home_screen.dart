@@ -31,7 +31,6 @@ class HomeScreen extends ConsumerWidget {
                     behavior: ScrollConfiguration.of(context).copyWith(
                       dragDevices: {
                         PointerDeviceKind.touch,
-                        PointerDeviceKind.mouse,
                       },
                     ),
                     child: ListView(
@@ -55,12 +54,14 @@ class HomeScreen extends ConsumerWidget {
                           size: size,
                           icon: const Icon(Icons.merge_type),
                           title: "عدد الاصناف",
-                          subtitle: viewModel.summary.totalExpenseTypes.toString(),
+                          subtitle:
+                              viewModel.summary.totalExpenseTypes.toString(),
                           color: Colors.greenAccent.withOpacity(0.2),
                         ),
                         CustomBox(
                           size: size,
-                          icon: const Icon(Icons.price_change_outlined, color: Colors.grey),
+                          icon: const Icon(Icons.price_change_outlined,
+                              color: Colors.grey),
                           title: "إجمالي الفواتير",
                           subtitle: viewModel.summary.totalPrice.toString(),
                           color: Colors.amber.withOpacity(0.2),
@@ -76,8 +77,10 @@ class HomeScreen extends ConsumerWidget {
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: const BorderRadius.all(Radius.circular(5)),
-                          border: Border.all(color: Colors.grey.shade300, width: 2)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(5)),
+                          border: Border.all(
+                              color: Colors.grey.shade300, width: 2)),
                       height: 300,
                       width: size.width * .37,
                       padding: const EdgeInsets.only(top: 15),
@@ -86,7 +89,8 @@ class HomeScreen extends ConsumerWidget {
                         children: [
                           const Padding(
                             padding: EdgeInsets.only(bottom: 10),
-                            child: Text("إجمالي الفواتير السنوية", style: TextStyle(fontSize: 16)),
+                            child: Text("إجمالي الفواتير السنوية",
+                                style: TextStyle(fontSize: 16)),
                           ),
                           Flexible(
                             child: LayoutBuilder(
@@ -98,14 +102,31 @@ class HomeScreen extends ConsumerWidget {
                                     titlesData: FlTitlesData(
                                       show: true,
                                       bottomTitles: AxisTitles(
-                                          sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups1)),
-                                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false, reservedSize: 40)),
+                                          sideTitles: SideTitles(
+                                              showTitles: true,
+                                              reservedSize: 40,
+                                              getTitlesWidget: viewModel
+                                                  .bottomTitlesGroups1)),
+                                      topTitles: const AxisTitles(
+                                          sideTitles:
+                                              SideTitles(showTitles: false)),
+                                      rightTitles: const AxisTitles(
+                                          sideTitles: SideTitles(
+                                              showTitles: false,
+                                              reservedSize: 40)),
                                     ),
                                     gridData: FlGridData(
                                         show: true,
-                                        getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                        getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        getDrawingVerticalLine: (value) =>
+                                            FlLine(
+                                                color: AppBrand.mainColor
+                                                    .withOpacity(0.1),
+                                                strokeWidth: 1),
+                                        getDrawingHorizontalLine: (value) =>
+                                            FlLine(
+                                                color: AppBrand.mainColor
+                                                    .withOpacity(0.1),
+                                                strokeWidth: 1),
                                         drawHorizontalLine: true,
                                         drawVerticalLine: true),
                                     borderData: FlBorderData(show: false),
@@ -121,8 +142,10 @@ class HomeScreen extends ConsumerWidget {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(color: Colors.grey.shade300, width: 2),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                        border:
+                            Border.all(color: Colors.grey.shade300, width: 2),
                       ),
                       height: 300,
                       width: size.width * .37,
@@ -130,7 +153,10 @@ class HomeScreen extends ConsumerWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 1),
                       child: Column(
                         children: [
-                          const Padding(padding: EdgeInsets.only(bottom: 5), child: Text("إجمالي الفواتير الاسبوعية", style: TextStyle(fontSize: 16))),
+                          const Padding(
+                              padding: EdgeInsets.only(bottom: 5),
+                              child: Text("إجمالي الفواتير الاسبوعية",
+                                  style: TextStyle(fontSize: 16))),
                           Flexible(
                             child: LayoutBuilder(
                               builder: (context, constraints) {
@@ -141,14 +167,30 @@ class HomeScreen extends ConsumerWidget {
                                     titlesData: FlTitlesData(
                                       show: true,
                                       bottomTitles: AxisTitles(
-                                          sideTitles: SideTitles(showTitles: true, reservedSize: 40, getTitlesWidget: viewModel.bottomTitlesGroups2)),
-                                      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                                      rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                                          sideTitles: SideTitles(
+                                              showTitles: true,
+                                              reservedSize: 40,
+                                              getTitlesWidget: viewModel
+                                                  .bottomTitlesGroups2)),
+                                      topTitles: const AxisTitles(
+                                          sideTitles:
+                                              SideTitles(showTitles: false)),
+                                      rightTitles: const AxisTitles(
+                                          sideTitles:
+                                              SideTitles(showTitles: false)),
                                     ),
                                     gridData: FlGridData(
                                         show: true,
-                                        getDrawingVerticalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
-                                        getDrawingHorizontalLine: (value) => FlLine(color: AppBrand.mainColor.withOpacity(0.1), strokeWidth: 1),
+                                        getDrawingVerticalLine: (value) =>
+                                            FlLine(
+                                                color: AppBrand.mainColor
+                                                    .withOpacity(0.1),
+                                                strokeWidth: 1),
+                                        getDrawingHorizontalLine: (value) =>
+                                            FlLine(
+                                                color: AppBrand.mainColor
+                                                    .withOpacity(0.1),
+                                                strokeWidth: 1),
                                         drawHorizontalLine: true,
                                         drawVerticalLine: true),
                                     borderData: FlBorderData(show: false),
@@ -191,7 +233,9 @@ class CustomBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 00),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: const BorderRadius.all(Radius.circular(5)), border: Border.all(color: Colors.grey.shade300, width: 1.5)),
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(5)),
+          border: Border.all(color: Colors.grey.shade300, width: 1.5)),
       height: 120,
       width: 210,
       child: Row(
@@ -203,12 +247,20 @@ class CustomBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Expanded(child: SizedBox()),
-              Text(title, style: const TextStyle(fontSize: 17, color: Colors.grey)),
-              Text(subtitle, style: const TextStyle(fontSize: 27, color: Colors.black))
+              Text(title,
+                  style: const TextStyle(fontSize: 17, color: Colors.grey)),
+              Text(subtitle,
+                  style: const TextStyle(fontSize: 27, color: Colors.black))
             ],
           ),
           const Expanded(child: SizedBox()),
-          Container(height: 40, width: 40, decoration: BoxDecoration(color: color, borderRadius: const BorderRadius.all(Radius.circular(10))), child: icon),
+          Container(
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: icon),
         ],
       ),
     ).animate().flip();
