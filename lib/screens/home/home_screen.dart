@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cars_expense_management/library.dart';
 import 'package:cars_expense_management/screens/home/home_view_model.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -23,38 +25,49 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomBox(
-                      size: size,
-                      icon: const Icon(Icons.car_rental_outlined),
-                      title: "عدد السيارات",
-                      subtitle: viewModel.summary.totalCars.toString(),
-                      color: Colors.blue.withOpacity(0.2),
+                SizedBox(
+                  height: 120,
+                  child: ScrollConfiguration(
+                    behavior: ScrollConfiguration.of(context).copyWith(
+                      dragDevices: {
+                        PointerDeviceKind.touch,
+                        PointerDeviceKind.mouse,
+                      },
                     ),
-                    CustomBox(
-                      size: size,
-                      icon: const Icon(Icons.document_scanner),
-                      title: "عدد الفواتير",
-                      subtitle: viewModel.summary.totalBills.toString(),
-                      color: Colors.amber.withOpacity(0.2),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        CustomBox(
+                          size: size,
+                          icon: const Icon(Icons.car_rental_outlined),
+                          title: "عدد السيارات",
+                          subtitle: viewModel.summary.totalCars.toString(),
+                          color: Colors.blue.withOpacity(0.2),
+                        ),
+                        CustomBox(
+                          size: size,
+                          icon: const Icon(Icons.document_scanner),
+                          title: "عدد الفواتير",
+                          subtitle: viewModel.summary.totalBills.toString(),
+                          color: Colors.amber.withOpacity(0.2),
+                        ),
+                        CustomBox(
+                          size: size,
+                          icon: const Icon(Icons.merge_type),
+                          title: "عدد الاصناف",
+                          subtitle: viewModel.summary.totalExpenseTypes.toString(),
+                          color: Colors.greenAccent.withOpacity(0.2),
+                        ),
+                        CustomBox(
+                          size: size,
+                          icon: const Icon(Icons.price_change_outlined, color: Colors.grey),
+                          title: "إجمالي الفواتير",
+                          subtitle: viewModel.summary.totalPrice.toString(),
+                          color: Colors.amber.withOpacity(0.2),
+                        ),
+                      ],
                     ),
-                    CustomBox(
-                      size: size,
-                      icon: const Icon(Icons.merge_type),
-                      title: "عدد الاصناف",
-                      subtitle: viewModel.summary.totalExpenseTypes.toString(),
-                      color: Colors.greenAccent.withOpacity(0.2),
-                    ),
-                    CustomBox(
-                      size: size,
-                      icon: const Icon(Icons.price_change_outlined, color: Colors.grey),
-                      title: "إجمالي الفواتير",
-                      subtitle: viewModel.summary.totalPrice.toString(),
-                      color: Colors.amber.withOpacity(0.2),
-                    ),
-                  ],
+                  ),
                 ),
                 const SizedBox(height: 70),
                 Row(
