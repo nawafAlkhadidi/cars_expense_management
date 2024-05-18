@@ -30,8 +30,8 @@ class HomeScreen extends ConsumerWidget {
                   child: ScrollConfiguration(
                     behavior: ScrollConfiguration.of(context).copyWith(
                       dragDevices: {
-                        PointerDeviceKind.touch,
                         PointerDeviceKind.mouse,
+                        PointerDeviceKind.touch,
                       },
                     ),
                     child: ListView(
