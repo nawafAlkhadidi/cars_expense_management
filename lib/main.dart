@@ -12,7 +12,7 @@ void main() async {
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
     title: "إدارة مصاريف السيارات",
-    titleBarStyle: TitleBarStyle.hidden,
+    titleBarStyle: TitleBarStyle.normal,
   );
 
   windowManager.waitUntilReadyToShow(windowOptions, () async {
