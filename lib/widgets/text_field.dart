@@ -43,13 +43,14 @@ Widget myTextFiled(
             //AppBrand.backgroundCategroy,
             suffixIcon: suffixIcon,
             errorBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)), gapPadding: 0, borderSide: BorderSide(width: .4, color: Colors.red)),
+                borderRadius: BorderRadius.all(Radius.circular(10)), gapPadding: 0, borderSide: BorderSide(width: .4, color: Colors.red)),
             focusedBorder:
-                const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)), borderSide: BorderSide(width: 1.2, color: AppBrand.mainColor)),
-            disabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-            enabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.grey)),
+                const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)), borderSide: BorderSide(width: 1.2, color: AppBrand.mainColor)),
+            disabledBorder: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            enabledBorder:
+                const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)), borderSide: BorderSide(width: 1, color: Colors.grey)),
             border:
-                const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)), borderSide: BorderSide(width: .4, color: AppBrand.mainColor)),
+                const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(10.0)), borderSide: BorderSide(width: .4, color: AppBrand.mainColor)),
             labelText: labelText,
             hintText: hintText,
             errorStyle: const TextStyle(fontSize: 14),
