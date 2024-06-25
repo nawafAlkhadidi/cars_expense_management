@@ -17,8 +17,13 @@ class CarViewModel extends ChangeNotifier {
   }
 
   List<CarModel> cars = [];
-  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final globalKey = GlobalKey<FormState>();
   final GlobalKey<SfDataGridState> key1 = GlobalKey<SfDataGridState>();
+  final scrollController = ScrollController();
+  final focusNode1 = FocusNode();
+  final focusNode2 = FocusNode();
+  final textField1Key = GlobalKey();
+  final textField2Key = GlobalKey();
   CarModel newCar = CarModel();
   int indexPage = 0;
 
@@ -153,6 +158,20 @@ class CarViewModel extends ChangeNotifier {
     Navigator.pop(context);
   }
 
+  void scrollToAndFocusNode(GlobalKey key, FocusNode focusNode) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+        alignment: 0.1,
+      ).then((_) {
+        focusNode.requestFocus();
+      });
+    }
+  }
+
   void addcar({required BuildContext context}) async {
     if (globalKey.currentState!.validate()) {
       newCar.plateNumbers = int.tryParse(plateNumbersController.value.text);
@@ -168,6 +187,12 @@ class CarViewModel extends ChangeNotifier {
       if (status) {
         getCars();
         setIndexPage(0);
+      }
+    } else {
+      // Find the first invalid field and scroll to it
+      if (!globalKey.currentState!.validate()) {
+        scrollToAndFocusNode(textField1Key, focusNode1);
+        scrollToAndFocusNode(textField2Key, focusNode2);
       }
     }
   }

@@ -19,6 +19,7 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
     final viewModel = ref.watch(carViewModelProvider);
     Size size = MediaQuery.sizeOf(context);
     return SingleChildScrollView(
+      controller: viewModel.scrollController,
       child: Form(
         key: viewModel.globalKey,
         child: Column(
@@ -243,6 +244,8 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                     child: myTextFiled(
                         readOnly: true,
                         controller: viewModel.inspectionEXController,
+                        key: viewModel.textField1Key,
+                        focusNode: viewModel.focusNode1,
                         onTap: () => viewModel.dateRangePickerDialog(context: context, controller: viewModel.inspectionEXController),
                         isvalidator: false,
                         suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
@@ -269,6 +272,8 @@ class _AddCarScreenState extends ConsumerState<AddCarScreen> {
                         readOnly: true,
                         onTap: () => viewModel.dateRangePickerDialog(context: context, controller: viewModel.licenseEXController),
                         controller: viewModel.licenseEXController,
+                        key: viewModel.textField2Key,
+                        focusNode: viewModel.focusNode2,
                         isvalidator: false,
                         suffixIcon: const Icon(Icons.date_range_outlined, color: Colors.black),
                         validator: (value) {

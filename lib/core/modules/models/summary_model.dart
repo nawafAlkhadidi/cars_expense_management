@@ -7,9 +7,9 @@ class SummaryModel {
   SummaryModel({this.totalCars, this.totalBills, this.totalExpenseTypes, this.totalPrice});
 
   SummaryModel.fromJson(Map<String, dynamic> json) {
-    totalCars = json['total_cars'];
-    totalBills = json['total_bills'];
-    totalExpenseTypes = json['total_expense_types'];
+    totalCars = json['total_cars'] ?? 0;
+    totalBills = json['total_bills'] ?? 0;
+    totalExpenseTypes = json['total_expense_types'] ?? 0;
     totalPrice = json['total_price'] ?? 0.0;
   }
 

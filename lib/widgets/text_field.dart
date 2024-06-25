@@ -15,6 +15,8 @@ Widget myTextFiled(
         String? initialValue,
         TextEditingController? controller,
         bool readOnly = false,
+        FocusNode? focusNode,
+        GlobalKey? key,
         double? height = 77,
         int maxLines = 1,
         Color? fillColor = const Color.fromRGBO(238, 238, 238, 1),
@@ -22,6 +24,8 @@ Widget myTextFiled(
     SizedBox(
       height: height,
       child: TextFormField(
+        focusNode: focusNode,
+        key: key,
         onFieldSubmitted: onSaved,
         inputFormatters: inputFormatters,
         initialValue: initialValue,

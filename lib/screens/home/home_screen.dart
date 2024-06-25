@@ -42,7 +42,7 @@ class HomeScreen extends ConsumerWidget {
                           size: size,
                           icon: const Icon(Icons.car_rental_outlined),
                           title: "عدد السيارات",
-                          subtitle: viewModel.summary.totalCars.toString(),
+                          subtitle: "${viewModel.summary.totalCars}" ?? "0",
                           color: Colors.blue.withOpacity(0.2),
                         ),
                         CustomBox(

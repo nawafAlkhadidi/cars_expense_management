@@ -20,6 +20,11 @@ void main() async {
     await windowManager.focus();
   });
   setupLocator();
+  // Database db = await DatabaseService().database;
+
+  // List<Map<String, dynamic>> tables = await db.rawQuery('SELECT name FROM sqlite_master WHERE type="table"');
+  // print('Tables after initialization: ${tables.map((e) => e['name']).toList()}');
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
