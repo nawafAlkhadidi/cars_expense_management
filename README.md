@@ -35,17 +35,15 @@ This application helps in organizing and managing car expenses efficiently, maki
 	• Riverpod for State Managment.
  	• Use of GetIt for DI.
  	• Code to be generic and simple.
-	•	Clean and simple design for easy interaction.
-	•	Distinctive colors to differentiate functional buttons.
-	•	Sidebar for easy navigation between different sections of the system.
+	• Clean and simple design for easy interaction.
+	• Distinctive colors to differentiate functional buttons.
+	• Sidebar for easy navigation between different sections of the system.
 
 # Core Functions:
 
-	•	Add car information.
-	•	Manage and record invoices related to expenses.
-	•	View and edit data related to cars, expenses, and invoices.
-
-
+	• Add car information.
+	• Manage and record invoices related to expenses.
+	• View and edit data related to cars, expenses, and invoices.
 
 
 
