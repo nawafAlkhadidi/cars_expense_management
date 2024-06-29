@@ -1,7 +1,7 @@
 
 <p align="center">
     <a href="">
-        <img src="./example/example2.png" height="400px">
+        <img src="./example/example1.png" height="400px">
     </a>
 </p>
 
@@ -15,7 +15,7 @@ This application helps in organizing and managing car expenses efficiently, maki
 
 <p align="center">
     <a href="">
-        <img src="./example/example1.png" height="400px">
+        <img src="./example/example2.png" height="400px">
     </a>
 </p>
 
