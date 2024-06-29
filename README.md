@@ -21,11 +21,11 @@ This application helps in organizing and managing car expenses efficiently, maki
 
 #  Sidebar Menu:
 
-	•	Home
-	•	Invoices
-	•	Cars
-	•	Expenses
-	•	Settings
+	• Home
+	• Invoices
+	• Cars
+	• Expenses
+	• Settings
 
 #  Key Features:
 
@@ -48,7 +48,6 @@ This application helps in organizing and managing car expenses efficiently, maki
 
 
 
-## Getting Started
 
 
 # dependencies :
@@ -61,7 +60,6 @@ This application helps in organizing and managing car expenses efficiently, maki
 - go_router: ^13.2.0 
 - sqflite: ^2.3.2
 - path: ^1.8.3
-- intl: 
 - syncfusion_flutter_datepicker: ^24.2.8
 - syncfusion_flutter_datagrid: ^24.2.9
 - collection: ^1.18.0
@@ -79,7 +77,7 @@ This application helps in organizing and managing car expenses efficiently, maki
  
   
 
-## Installation :
+## Getting Started
 
 1. clone the repository using the link below:
 ```
